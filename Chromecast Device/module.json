@@ -1,0 +1,12 @@
+{
+    "id": "{935F2596-C56A-88DB-A2B8-1A4A06605206}",
+    "name": "Chromecast Device",
+    "type": 3,
+    "vendor": "Google",
+    "aliases": [],
+    "parentRequirements": [],
+    "childRequirements": [],
+    "implemented": [],
+    "prefix": "CCDE",
+    "url": ""
+}

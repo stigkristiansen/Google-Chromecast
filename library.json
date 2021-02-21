@@ -1,0 +1,12 @@
+{
+    "id": "{F1F07DAB-311C-5571-0C2D-FC35234AD2C0}",
+    "name": "Chromecast",
+    "author": "Stig Kristiansen",
+    "url": "",
+    "compatibility": {
+        "version": "5.0"
+    },
+    "version": "1.0",
+    "build": 0,
+    "date": 0
+}

@@ -26,7 +26,5 @@
             "name": "Id", "caption": "Device Id",
             "enabled": false
         }
-    ],
-    "actions": [],
-    "status": []
+    ]
 }

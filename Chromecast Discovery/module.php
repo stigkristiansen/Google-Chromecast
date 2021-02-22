@@ -79,10 +79,10 @@
 
 			$dnssdId = $instanceIds[0];
 
-			$services = ZC_QueryServiceTypeEx(dnssdId, "_googlecast._tcp", "", 500);
+			$services = ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
 
 			foreach($services as $service) {
-				$device = ZC_QueryService (dnssdId , $service['Name'], $service['Type'] ,  $service['Domain']); 
+				$device = ZC_QueryService ($dnssdId , $service['Name'], $service['Type'] ,  $service['Domain']); 
 				if(count($device)==0)
 					continue;
 					$devices[substr($device[0]['TXTRecords'][0], 3)] = [	// Id is used as index

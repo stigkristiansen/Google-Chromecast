@@ -19,18 +19,15 @@
 			parent::ApplyChanges();
 		}
 
-		public function GetConfigurationForm()
-		{
+		public function GetConfigurationForm() {
 			$devices = $this->DiscoverCCDevices();
 			$ccInstances = $this->GetCCInstances();
-
-			$form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
 	
 			$Values = [];
 	
 			foreach ($devices as $id => $device) {
 				$value = [
-					'Ip'		=> $device['Ip'],
+					'Ip'			=> $device['Ip'],
 					'Port'       	=> $device['Port'],
 					'DisplayName' 	=> $device['DisplayName'],
 					'instanceId' 	=> 0,
@@ -42,17 +39,18 @@
 					$value['DisplayName'] = IPS_GetName($instanceId);
 					$value['instanceId'] = $instanceId;
 				}
+				
 				$value['create'] = [
-						'moduleID'      => '{251DAC2C-5B1F-4B1F-B843-B22D518F553E}',
-						'configuration' => [
-							'Ip' => $device['Ip'],
-							'Port' => $device['Port'],
-							'DisplayName' => $device['DisplayName'],
-							'Name' => $device['Name'],
-							'Id' => $id
-						],
-					],
-				];=
+					'moduleID'      => '{935F2596-C56A-88DB-A2B8-1A4A06605206}',
+					'configuration' => [
+						'Ip' 			=> $device['Ip'],
+						'Port' 			=> $device['Port'],
+						'DisplayName' 	=> $device['DisplayName'],
+						'Name' 			=> $device['Name'],
+						'Id' 			=> $id
+					]
+				];
+				
 				$values[] = $value;
 			}
 	
@@ -64,12 +62,13 @@
 					'instanceID' 	=> $instanceId
 				];
 			}
+
+			$form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
 			$form['actions'][0]['values'] = $values;
 	
-			return json_encode($Form);
+			return json_encode($form);
 		}
 	
-
 		private function DiscoverCCDevices() : array {
 			$devices = [];
 
@@ -100,7 +99,7 @@
 		private function GetCCInstances () : array {
 			$devices = [];
 
-			$instanceIds = IPS_GetInstanceListByModuleID('{251DAC2C-5B1F-4B1F-B843-B22D518F553E}');
+			$instanceIds = IPS_GetInstanceListByModuleID('{935F2596-C56A-88DB-A2B8-1A4A06605206}');
         	
         	foreach ($instanceIds as $instanceId) {
 				$devices[$instanceId] = IPS_GetProperty($instanceId, 'Id');

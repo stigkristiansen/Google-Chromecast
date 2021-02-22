@@ -23,7 +23,7 @@
 			$devices = $this->DiscoverCCDevices();
 			$ccInstances = $this->GetCCInstances();
 	
-			$Values = [];
+			$values = [];
 	
 			foreach ($devices as $id => $device) {
 				$value = [

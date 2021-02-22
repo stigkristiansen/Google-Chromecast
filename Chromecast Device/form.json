@@ -1,5 +1,32 @@
 {
-    "elements": [],
+    "elements": [
+        {   
+            "type": "ValidationTextBox",
+            "name": "DisplayName", "caption": "Display Name",
+            "enabled": false
+        },
+        {   
+            "type": "ValidationTextBox",
+            "name": "Name", "caption": "Service Name",
+            "enabled": false
+        },
+        {   
+            "type": "ValidationTextBox",
+            "name": "Ip", "caption": "IP Address",
+            "enabled": false
+        },
+        
+        {   
+            "type": "ValidationTextBox",
+            "name": "Port", "caption": "Port",
+            "enabled": false
+        },
+        {   
+            "type": "ValidationTextBox",
+            "name": "Id", "caption": "Device Id",
+            "enabled": false
+        }
+    ],
     "actions": [],
     "status": []
 }

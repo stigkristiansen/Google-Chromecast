@@ -36,7 +36,7 @@
 				$instanceId = array_search($id, $ccInstances);
 				if ($instanceId !== false) {
 					unset($ccInstances[$instanceId]);
-					$value['DisplayName'] = IPS_GetName($instanceId);
+					//$value['DisplayName'] = IPS_GetName($instanceId);
 					$value['instanceID'] = $instanceId;
 				}
 				
@@ -58,7 +58,7 @@
 				$values[] = [
 					'Ip'  			=> IPS_GetProperty($instanceId, 'Ip'),
 					'Port'       	=> IPS_GetProperty($instanceId, 'Port'),
-					'DisplayName'   => IPS_GetName($instanceId),
+					'DisplayName'   => IPS_GetProperty($instanceId, 'DisplayName'), //IPS_GetName($instanceId),
 					'instanceID' 	=> $instanceId
 				];
 			}

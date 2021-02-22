@@ -30,14 +30,14 @@
 					'Ip'			=> $device['Ip'],
 					'Port'       	=> $device['Port'],
 					'DisplayName' 	=> $device['DisplayName'],
-					'instanceId' 	=> 0,
+					'instanceID' 	=> 0,
 				];
 				
 				$instanceId = array_search($id, $ccInstances);
 				if ($instanceId !== false) {
 					unset($ccInstances[$instanceId]);
 					$value['DisplayName'] = IPS_GetName($instanceId);
-					$value['instanceId'] = $instanceId;
+					$value['instanceID'] = $instanceId;
 				}
 				
 				$value['create'] = [

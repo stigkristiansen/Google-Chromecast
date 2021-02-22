@@ -11,6 +11,11 @@
             },
             "columns": [
                 {
+                    "caption": "Name",
+                    "name": "DisplayName",
+                    "width": "auto"
+                },
+                {
                     "caption": "IP Address",
                     "name": "Ip",
                     "width": "160px"
@@ -19,11 +24,6 @@
                     "caption": "Port",
                     "name": "Port",
                     "width": "100px"
-                },
-                {
-                    "caption": "Name",
-                    "name": "DisplayName",
-                    "width": "auto"
                 }
             ],
             "values": []

@@ -72,12 +72,15 @@
 		private function DiscoverCCDevices() : array {
 			$devices = [];
 
+			IPS_LogMessage('Chromecast Discovery','Inside DiscoverCCDevices');
+
 			// Find DNS SD Instance
 			$instanceIds = IPS_GetInstanceListByModuleID('{780B2D48-916C-4D59-AD35-5A429B2355A5}');
 			if(count($instanceIds)==0)
 				return $devices;
 
 			$dnssdId = $instanceIds[0];
+			IPS_LogMessage('Chromecast Discovery','Found DNS SD: '. (string)$dnssdId );
 
 			$services = ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
 

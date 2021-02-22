@@ -1,5 +1,32 @@
 {
-    "elements": [],
-    "actions": [],
-    "status": []
+    "actions": [
+        {
+            "type": "Configurator",
+            "name": "Discovery",
+            "add": false,
+            "delete": true,
+            "sort": {
+                "column": "DisplayName",
+                "direction": "ascending"
+            },
+            "columns": [
+                {
+                    "caption": "IP Address",
+                    "name": "Ip",
+                    "width": "160px"
+                },
+                {
+                    "caption": "Port",
+                    "name": "Port",
+                    "width": "100px"
+                },
+                {
+                    "caption": "Name",
+                    "name": "DisplayName",
+                    "width": "auto"
+                }
+            ],
+            "values": []
+        }
+    ]
 }

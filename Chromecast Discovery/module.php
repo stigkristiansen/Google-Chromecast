@@ -84,6 +84,8 @@
 
 			$services = ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
 
+			IPS_LogMessage('Chromecast Discovery','Services found: '. json_encode($services));
+
 			foreach($services as $service) {
 				$device = ZC_QueryService ($dnssdId , $service['Name'], $service['Type'] ,  $service['Domain']); 
 				if(count($device)==0)

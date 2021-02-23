@@ -107,10 +107,16 @@
 			$type = $this->ReadPropertyString(Properties::TYPE);
 			$domain = $this->ReadPropertyString(Properties::DOMAIN); 
 
-			IPS_LogMessage('Chromecast Device', $name . ':' . $type . ':' . $domain);
+			//IPS_LogMessage('Chromecast Device', $name . ':' . $type . ':' . $domain);
 
 			$device = ZC_QueryService ($dnssdId , $name, $type ,  $domain); 
+
+			$this->SetValueEx(Variables::SOURCE, substr($device[0]['TXTRecords'][11], 3));
 		}
 
-
+		private function SetValueEx(string $Ident, $Value) {
+			$oldValue = $this->GetValue($Ident);
+			if($oldValue!=$Value)
+				$this->SetValue($Ident, $Value);
+		}
 	}

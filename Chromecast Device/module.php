@@ -1,6 +1,6 @@
 <?php
 	class Timers {
-		const UPDATE = 'Update';
+		const UPDATE = 'CCDEUpdate';
 	}
 
 	class Variables {
@@ -43,10 +43,12 @@
 		}
 
 		private function SetTimer() {
+			IPS_LogMessage('Chromecast Device', 'Inside SetTimer()');
 			$this->SetTimerInterval(Timers::UPDATE  . (string) $this->InstanceID, 5000);
 		}
 	
 		public function RequestAction($Ident, $Value) {
+			IPS_LogMessage('Chromecast Device', 'RequestAction');
 			try {
 				switch ($Ident) {
 					case Variables::SOURCE_IDENT:
@@ -64,7 +66,7 @@
 		}
 
 		private function Update() {
-			IPS_LogMessage('Chromecast Device', 'Inside function Update...');
+			IPS_LogMessage('Chromecast Device', 'Inside Update()');
 		}
 
 		public function Destroy() {

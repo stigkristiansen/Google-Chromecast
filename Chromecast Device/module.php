@@ -10,6 +10,7 @@
 
 	class Errors {
 		const UNEXPECTED  = 'An unexpected error occured. The error was : %s';
+		const MISSINGDNSSD = 'Did not find any instances of DNS-SD';
 	}
 
 	class Actions {
@@ -24,10 +25,6 @@
 		const DOMAIN = 'Domain';
 		const DISPLAYNAME = 'DisplayName';
 		const ID = 'Id';
-	}
-
-	class Errors {
-		const MISSINGDNSSD = 'Did not find any instances of DNS-SD';
 	}
 
 	class ChromecastDevice extends IPSModule {

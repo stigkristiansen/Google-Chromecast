@@ -1,11 +1,11 @@
 <?php
 	class Timers {
-		public static const UPDATE 'Update';
+		public static const UPDATE = 'Update';
 	}
 
 	class Variables {
-		public static const SOURCE_IDENT 'Source';
-		public static const SOURCE_TEXT 'Source';
+		public static const SOURCE_IDENT = 'Source';
+		public static const SOURCE_TEXT = 'Source';
 	}
 
 	class Errors {

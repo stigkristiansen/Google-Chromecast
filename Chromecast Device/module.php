@@ -95,26 +95,32 @@
 		private function Update() {
 			IPS_LogMessage('Chromecast Device', 'Inside Update()');
 			
-			$instanceIds = IPS_GetInstanceListByModuleID('{780B2D48-916C-4D59-AD35-5A429B2355A5}');
-			if(count($instanceIds)==0) {
-				return;
-				$this->LogMessage(Errors::MISSINGDNSSD, KL_ERROR);
-			}
-			
-			$dnssdId = $instanceIds[0];
+			$ip = $this->ReadPropertyString(Properties::IP);
 
-			$name = $this->ReadPropertyString(Properties::NAME);
-			$type = $this->ReadPropertyString(Properties::TYPE);
-			$domain = $this->ReadPropertyString(Properties::DOMAIN); 
+			//if($this->PingTest($ip)) {
+				$instanceIds = IPS_GetInstanceListByModuleID('{780B2D48-916C-4D59-AD35-5A429B2355A5}');
+				if(count($instanceIds)==0) {
+					$this->LogMessage(Errors::MISSINGDNSSD, KL_ERROR);
+					return;
+				}
+				
+				$dnssdId = $instanceIds[0];
 
-			//IPS_LogMessage('Chromecast Device', $name . ':' . $type . ':' . $domain);
+				$name = $this->ReadPropertyString(Properties::NAME);
+				$type = $this->ReadPropertyString(Properties::TYPE);
+				$domain = $this->ReadPropertyString(Properties::DOMAIN); 
+				
 
-			$device = ZC_QueryService ($dnssdId , $name, $type ,  $domain); 
+				//IPS_LogMessage('Chromecast Device', $name . ':' . $type . ':' . $domain);
+				
+				$device = ZC_QueryService ($dnssdId , $name, $type ,  $domain); 
 
-			if(count($device)>0)
-				$this->SetValueEx(Variables::SOURCE_IDENT, substr($device[0]['TXTRecords'][11], 3));
-			else
-				$this->SetValueEx(Variables::SOURCE_IDENT, '');
+				if(count($device)>0) 
+					$this->SetValueEx(Variables::SOURCE_IDENT, substr($device[0]['TXTRecords'][11], 3));
+				else
+					$this->SetValueEx(Variables::SOURCE_IDENT, '');
+			//else
+				//$this->SetValueEx(Variables::SOURCE_IDENT, '');
 		}
 
 		private function SetValueEx(string $Ident, $Value) {
@@ -122,4 +128,16 @@
 			if($oldValue!=$Value)
 				$this->SetValue($Ident, $Value);
 		}
+
+		private function PingTest(string $IPAddress) {
+			$wait = 500;
+			for($count=0;$count<3;$count++) {
+				if(Sys_Ping($IPAddress, $wait))
+					return true;
+				$wait*=2;
+			}
+	
+			return false;
+		}
+	
 	}

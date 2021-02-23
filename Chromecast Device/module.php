@@ -20,8 +20,14 @@
 		const IP = 'Ip';
 		const PORT = 'Port';
 		const NAME = 'Name';
+		const TYPE = 'Type';
+		const DOMAIN = 'Domain';
 		const DISPLAYNAME = 'DisplayName';
 		const ID = 'Id';
+	}
+
+	class Errors {
+		const MISSINGDNSSD = 'Did not find any instances of DNS-SD';
 	}
 
 	class ChromecastDevice extends IPSModule {
@@ -33,6 +39,8 @@
 			$this->RegisterPropertyString(Properties::IP, '');
 			$this->RegisterPropertyInteger(Properties::PORT, 0);
 			$this->RegisterPropertyString(Properties::NAME, '');
+			$this->RegisterPropertyString(Properties::TYPE, '');
+			$this->RegisterPropertyString(Properties::DOMAIN, '');
 			$this->RegisterPropertyString(Properties::DISPLAYNAME, '');
 			$this->RegisterPropertyString(Properties::ID, '');
 			
@@ -65,12 +73,12 @@
 		}
 
 		private function SetTimer() {
-			IPS_LogMessage('Chromecast Device', 'Inside SetTimer()');
+			//IPS_LogMessage('Chromecast Device', 'Inside SetTimer()');
 			$this->SetTimerInterval(Timers::UPDATE  . (string) $this->InstanceID, 5000);
 		}
 	
 		public function RequestAction($Ident, $Value) {
-			IPS_LogMessage('Chromecast Device', 'Inside RequestAction()');
+			//IPS_LogMessage('Chromecast Device', 'Inside RequestAction()');
 			try {
 				switch ($Ident) {
 					case Variables::SOURCE_IDENT:
@@ -89,6 +97,20 @@
 
 		private function Update() {
 			IPS_LogMessage('Chromecast Device', 'Inside Update()');
+			
+			$instanceIds = IPS_GetInstanceListByModuleID('{780B2D48-916C-4D59-AD35-5A429B2355A5}');
+			if(count($instanceIds)==0) {
+				return;
+				$this->LogMessage(Errors::MISSINGDNSSD, KL_ERROR);
+			}
+			
+			$dnssdId = $instanceIds[0];
+
+			$name = $this->ReadPropertyString(Properties::NAME);
+			$type = $this->ReadPropertyString(Properties::TYPE);
+			$domain = $this->ReadPropertyString(Properties::DOMAIN); 
+
+			$device = ZC_QueryService ($dnssdId , $name, $type ,  $domain); 
 		}
 
 

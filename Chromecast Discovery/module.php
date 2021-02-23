@@ -47,6 +47,8 @@
 						'Port' 			=> $device['Port'],
 						'DisplayName' 	=> $device['DisplayName'],
 						'Name' 			=> $device['Name'],
+						'Type' 			=> $device['Type'],
+						'Domain' 		=> $device['Domain'],
 						'Id' 			=> $id
 					]
 				];
@@ -72,7 +74,7 @@
 		private function DiscoverCCDevices() : array {
 			$devices = [];
 
-			IPS_LogMessage('Chromecast Discovery','Inside DiscoverCCDevices');
+			//IPS_LogMessage('Chromecast Discovery','Inside DiscoverCCDevices');
 
 			// Find DNS SD Instance
 			$instanceIds = IPS_GetInstanceListByModuleID('{780B2D48-916C-4D59-AD35-5A429B2355A5}');
@@ -80,18 +82,20 @@
 				return $devices;
 
 			$dnssdId = $instanceIds[0];
-			IPS_LogMessage('Chromecast Discovery','Found DNS SD: '. (string)$dnssdId );
+			//IPS_LogMessage('Chromecast Discovery','Found DNS SD: '. (string)$dnssdId );
 
 			$services = ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
 
-			IPS_LogMessage('Chromecast Discovery','Services found: '. json_encode($services));
+			//IPS_LogMessage('Chromecast Discovery','Services found: '. json_encode($services));
 
 			foreach($services as $service) {
 				$device = ZC_QueryService ($dnssdId , $service['Name'], $service['Type'] ,  $service['Domain']); 
 				if(count($device)==0)
 					continue;
 					$devices[substr($device[0]['TXTRecords'][0], 3)] = [	// Id is used as index
-						'Name' => $device[0]['Name'], 
+						'Name' => $service['Name'],
+						'Type' => $service['Type'],
+						'Domain' =>$service['Domain'],
 						'DisplayName' => substr($device[0]['TXTRecords'][6], 3),
 						'Port' => $device[0]['Port'],
 						'Ip' => $device[0]['IPv4'][0]

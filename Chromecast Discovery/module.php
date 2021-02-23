@@ -27,8 +27,6 @@
 	
 			foreach ($devices as $id => $device) {
 				$value = [
-					'Ip'			=> $device['Ip'],
-					'Port'       	=> $device['Port'],
 					'DisplayName' 	=> $device['DisplayName'],
 					'instanceID' 	=> 0,
 				];
@@ -56,8 +54,6 @@
 	
 			foreach ($ccInstances as $instanceId => $id) {
 				$values[] = [
-					'Ip'  			=> IPS_GetProperty($instanceId, 'Ip'),
-					'Port'       	=> IPS_GetProperty($instanceId, 'Port'),
 					'DisplayName'   => IPS_GetProperty($instanceId, 'DisplayName'), //IPS_GetName($instanceId),
 					'instanceID' 	=> $instanceId
 				];

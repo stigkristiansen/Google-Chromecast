@@ -111,7 +111,10 @@
 
 			$device = ZC_QueryService ($dnssdId , $name, $type ,  $domain); 
 
-			$this->SetValueEx(Variables::SOURCE_IDENT, substr($device[0]['TXTRecords'][11], 3));
+			if(count($device)>0)
+				$this->SetValueEx(Variables::SOURCE_IDENT, substr($device[0]['TXTRecords'][11], 3));
+			else
+				$this->SetValueEx(Variables::SOURCE_IDENT, '');
 		}
 
 		private function SetValueEx(string $Ident, $Value) {

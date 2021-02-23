@@ -17,7 +17,7 @@
         },
         
         {   
-            "type": "ValidationTextBox",
+            "type": "NumberSpinner",
             "name": "Port", "caption": "Port",
             "enabled": false
         },

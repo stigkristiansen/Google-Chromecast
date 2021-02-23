@@ -1,19 +1,19 @@
 <?php
 	class Timers {
-		public static UPDATE = 'Update';
+		public static const UPDATE 'Update';
 	}
 
 	class Variables {
-		public static SOURCE_IDENT = 'Source';
-		public static SOURCE_TEXT = 'Source';
+		public static const SOURCE_IDENT 'Source';
+		public static const SOURCE_TEXT 'Source';
 	}
 
 	class Errors {
-		public static UNEXPECTED  = 'An unexpected error occured. The error was : %s';
+		public static const UNEXPECTED  = 'An unexpected error occured. The error was : %s';
 	}
 
 	class Actions {
-		public static UPDATE = 'Update';
+		public static const UPDATE = 'Update';
 	}
 
 	class ChromecastDevice extends IPSModule {

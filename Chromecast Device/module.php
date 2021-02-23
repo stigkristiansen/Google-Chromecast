@@ -13,7 +13,15 @@
 	}
 
 	class Actions {
-		const UPDATE = 'Update';
+		const UPDATE = 'CCDEUpdate';
+	}
+
+	class Properties {
+		const IP = 'Ip';
+		const PORT = 'Port';
+		const NAME = 'Name';
+		const DISPLAYNAME = 'DisplayName';
+		const ID = 'Id';
 	}
 
 	class ChromecastDevice extends IPSModule {
@@ -22,11 +30,11 @@
 			//Never delete this line!
 			parent::Create();
 
-			$this->RegisterPropertyString('Ip', '');
-			$this->RegisterPropertyInteger('Port', 0);
-			$this->RegisterPropertyString('Name', '');
-			$this->RegisterPropertyString('DisplayName', '');
-			$this->RegisterPropertyString('Id', '');
+			$this->RegisterPropertyString(Properties::IP, '');
+			$this->RegisterPropertyInteger(Properties::PORT, 0);
+			$this->RegisterPropertyString(Properties::NAME, '');
+			$this->RegisterPropertyString(Properties::DISPLAYNAME, '');
+			$this->RegisterPropertyString(Properties::ID, '');
 			
 			$source = $this->RegisterVariableString(Variables::SOURCE_IDENT, Variables::SOURCE_TEXT, '', 1);
 			$this->EnableAction(Variables::SOURCE_IDENT);
@@ -62,7 +70,7 @@
 		}
 	
 		public function RequestAction($Ident, $Value) {
-			IPS_LogMessage('Chromecast Device', 'RequestAction');
+			IPS_LogMessage('Chromecast Device', 'Inside RequestAction()');
 			try {
 				switch ($Ident) {
 					case Variables::SOURCE_IDENT:

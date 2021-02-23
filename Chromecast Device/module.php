@@ -91,8 +91,7 @@
 		}
 
 		private function Update() {
-			IPS_LogMessage('Chromecast Device', 'Inside Update()');
-			
+			// Try to find a DNS SD instance
 			$instanceIds = IPS_GetInstanceListByModuleID('{780B2D48-916C-4D59-AD35-5A429B2355A5}');
 			if(count($instanceIds)==0) {
 				$this->LogMessage(Errors::MISSINGDNSSD, KL_ERROR);

@@ -35,6 +35,20 @@
 			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
 		}
 
+		public function Destroy() {
+			//Never delete this line!
+			parent::Destroy();
+		}
+
+		public function ApplyChanges() {
+			//Never delete this line!
+			parent::ApplyChanges();
+
+			if (IPS_GetKernelRunlevel() == KR_READY)
+				$this->SetTimer();
+		}
+
+
 		public function MessageSink($TimeStamp, $SenderID, $Message, $Data) {
 			parent::MessageSink($TimeStamp, $SenderID, $Message, $Data);
 	
@@ -69,14 +83,5 @@
 			IPS_LogMessage('Chromecast Device', 'Inside Update()');
 		}
 
-		public function Destroy() {
-			//Never delete this line!
-			parent::Destroy();
-		}
-
-		public function ApplyChanges() {
-			//Never delete this line!
-			parent::ApplyChanges();
-		}
 
 	}

@@ -107,6 +107,8 @@
 			$type = $this->ReadPropertyString(Properties::TYPE);
 			$domain = $this->ReadPropertyString(Properties::DOMAIN); 
 
+			IPS_LogMessage('Chromecast Device', $name . ':' . $type . ':' . $domain);
+
 			$device = ZC_QueryService ($dnssdId , $name, $type ,  $domain); 
 		}
 

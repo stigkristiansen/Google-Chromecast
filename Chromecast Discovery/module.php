@@ -43,8 +43,6 @@
 				$value['create'] = [
 					'moduleID'      => '{935F2596-C56A-88DB-A2B8-1A4A06605206}',
 					'configuration' => [
-						'Ip' 			=> $device['Ip'],
-						'Port' 			=> $device['Port'],
 						'DisplayName' 	=> $device['DisplayName'],
 						'Name' 			=> $device['Name'],
 						'Type' 			=> $device['Type'],
@@ -97,8 +95,6 @@
 						'Type' => $service['Type'],
 						'Domain' =>$service['Domain'],
 						'DisplayName' => substr($device[0]['TXTRecords'][6], 3),
-						'Port' => $device[0]['Port'],
-						'Ip' => $device[0]['IPv4'][0]
 					];	
 			}
 

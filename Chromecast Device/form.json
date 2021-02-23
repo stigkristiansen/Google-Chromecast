@@ -12,13 +12,13 @@
         },
         {   
             "type": "ValidationTextBox",
-            "name": "Ip", "caption": "IP Address",
+            "name": "Type", "caption": "Type",
             "enabled": false
         },
         
         {   
-            "type": "NumberSpinner",
-            "name": "Port", "caption": "Port",
+            "type": "ValidationTextBox",
+            "name": "Domain", "caption": "Domain",
             "enabled": false
         },
         {   

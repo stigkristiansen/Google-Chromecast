@@ -79,7 +79,7 @@
 			$found = false;
 			$name = $this->ReadPropertyString(Properties::NAME);
 			$services = @ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
-			if($service!==false) {
+			if($services!==false) {
 				foreach($services as $service) {
 					if(strcasecmp($service['Name'], $name)==0) {
 						$found = true;

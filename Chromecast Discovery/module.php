@@ -99,8 +99,8 @@
 				if($device===false)
 					continue;
 				
-				$displayName = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'fn')
-				$id = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'id')
+				$displayName = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'fn');
+				$id = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'id');
 				if($displayName!==false && $id!==false) {
 					//$devices[substr($device[0]['TXTRecords'][0], 3)] = [	// Id is used as index
 						$devices[$id] = [	// Id is used as index

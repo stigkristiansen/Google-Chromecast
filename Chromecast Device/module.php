@@ -15,6 +15,8 @@
 			$this->RegisterPropertyString(Properties::DOMAIN, '');
 			$this->RegisterPropertyString(Properties::DISPLAYNAME, '');
 			$this->RegisterPropertyString(Properties::ID, '');
+
+			$this->RegisterAttributeBoolean(Attributes::RENAME_IDENT, false);
 			
 			$source = $this->RegisterVariableString(Variables::SOURCE_IDENT, Variables::SOURCE_TEXT, '', 1);
 			$this->EnableAction(Variables::SOURCE_IDENT);
@@ -34,6 +36,11 @@
 
 			if (IPS_GetKernelRunlevel() == KR_READY)
 				$this->SetTimer();
+
+			if(!this->ReadAttributeBoolean(Attributes::RENAME_IDENT)) {
+				$this->WriteAttributeBoolean(Attributes::RENAME_IDENT, true);
+				IPS_SetName($this->InstanceID, $this->ReadPropertyString(Properties::DisplayName));
+			}
 		}
 
 		public function MessageSink($TimeStamp, $SenderID, $Message, $Data) {

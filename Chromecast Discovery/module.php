@@ -37,7 +37,7 @@
 					'instanceID' 	=> 0,
 				];
 				
-				// Check if discoverd device have a instance that are created earlier. If found, set InstanceID
+				// Check if discoverd device have an instance that are created earlier. If found, set InstanceID
 				$instanceId = array_search($id, $ccInstances);
 				if ($instanceId !== false) {
 					unset($ccInstances[$instanceId]);

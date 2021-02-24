@@ -3,8 +3,6 @@
 
 	require_once(__DIR__ . "/../libs/autoload.php");
 
-	
-
 	class ChromecastDevice extends IPSModule {
 		use ServiceDiscovery;
 
@@ -37,7 +35,6 @@
 			if (IPS_GetKernelRunlevel() == KR_READY)
 				$this->SetTimer();
 		}
-
 
 		public function MessageSink($TimeStamp, $SenderID, $Message, $Data) {
 			parent::MessageSink($TimeStamp, $SenderID, $Message, $Data);
@@ -80,18 +77,30 @@
 			$dnssdId = $instanceIds[0];
 
 			$name = $this->ReadPropertyString(Properties::NAME);
-			$type = $this->ReadPropertyString(Properties::TYPE);
-			$domain = $this->ReadPropertyString(Properties::DOMAIN); 
 			
-			$device = @ZC_QueryServiceEx($dnssdId , $name, $type ,  $domain, 500); 
+			$found = false;
+			$services = @ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
+			foreach($services as $service) {
+				if(strcasecmp($service['Name'], $name)==0) {
+					$found = true;
+					break;
+				}
+			}
 
-			if($device!==false) {
-				$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');
-				if($source!==false)
-					$this->SetValueEx(Variables::SOURCE_IDENT, $source);
-				else
-					$this->SetValueEx(Variables::SOURCE_IDENT, '');	
-				//$this->SetValueEx(Variables::SOURCE_IDENT, substr($device[0]['TXTRecords'][11], 3));
+			if($found) {
+				$type = $this->ReadPropertyString(Properties::TYPE);
+				$domain = $this->ReadPropertyString(Properties::DOMAIN); 
+				
+				$device = @ZC_QueryServiceEx($dnssdId , $name, $type ,  $domain, 500); 
+
+				if(count($device)>0) {
+					$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');
+					if($source!==false)
+						$this->SetValueEx(Variables::SOURCE_IDENT, $source);
+					else
+						$this->SetValueEx(Variables::SOURCE_IDENT, '');	
+				} else
+					$this->SetValueEx(Variables::SOURCE_IDENT, '');
 			} else
 				$this->SetValueEx(Variables::SOURCE_IDENT, '');
 		}

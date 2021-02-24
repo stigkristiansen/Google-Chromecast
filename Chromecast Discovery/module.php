@@ -25,14 +25,14 @@
 		}
 
 		public function GetConfigurationForm() {
-			$devices = $this->DiscoverCCDevices();
+			$ccDevices = $this->DiscoverCCDevices();
 			$ccInstances = $this->GetCCInstances();
 	
 			$values = [];
 	
-			foreach ($devices as $id => $device) {
+			foreach ($ccDevices as $id => $device) {
 				$value = [
-					'DisplayName' 	=> $device['DisplayName'],
+					Properties::DISPLAYNAME 	=> $device['DisplayName'],
 					'instanceID' 	=> 0,
 				];
 				
@@ -44,13 +44,13 @@
 				}
 				
 				$value['create'] = [
-					'moduleID'      => '{935F2596-C56A-88DB-A2B8-1A4A06605206}',
+					'moduleID'      => Modules::CHROMECAST,
 					'configuration' => [
-						'DisplayName' 	=> $device['DisplayName'],
-						'Name' 			=> $device['Name'],
-						'Type' 			=> $device['Type'],
-						'Domain' 		=> $device['Domain'],
-						'Id' 			=> $id
+						Properties::DISPLAYNAME	=> $device[Properties::DISPLAYNAME],
+						Properties::NAME 		=> $device[Properties::NAME],
+						Properties::TYPE		=> $device[Properties::TYPE],
+						Properties::DOMAIN 		=> $device[Properties::DOMAIN],
+						Properties::ID 			=> $id
 					]
 				];
 				
@@ -59,7 +59,7 @@
 	
 			foreach ($ccInstances as $instanceId => $id) {
 				$values[] = [
-					'DisplayName'   => IPS_GetProperty($instanceId, 'DisplayName'), //IPS_GetName($instanceId),
+					'DisplayName'   => IPS_GetProperty($instanceId, Properties::DISPLAYNAME), 
 					'instanceID' 	=> $instanceId
 				];
 			}
@@ -73,36 +73,31 @@
 		private function DiscoverCCDevices() : array {
 			$devices = [];
 
-			//IPS_LogMessage('Chromecast Discovery','Inside DiscoverCCDevices');
-
 			// Find DNS SD Instance
-			$instanceIds = IPS_GetInstanceListByModuleID('{780B2D48-916C-4D59-AD35-5A429B2355A5}');
+			$instanceIds = IPS_GetInstanceListByModuleID(Modules:DNSSD);
 			if(count($instanceIds)==0)
 				return $devices;
 
 			$dnssdId = $instanceIds[0];
-			//IPS_LogMessage('Chromecast Discovery','Found DNS SD: '. (string)$dnssdId );
-
+			
 			$services = @ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
 
 			foreach($services as $service) {
-				$device = @ZC_QueryServiceEx ($dnssdId , $service['Name'], $service['Type'] ,  $service['Domain'], 500); 
+				$device = @ZC_QueryServiceEx ($dnssdId , $service[Properties::NAME], $service[Properties::TYPE] ,  $service[Properties::DOMAIN], 500); 
 				if($device===false)
 					continue;
 				
 				$displayName = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'fn');
 				$id = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'id');
 				if($displayName!==false && $id!==false) {
-					//$devices[substr($device[0]['TXTRecords'][0], 3)] = [	// Id is used as index
 						$devices[$id] = [	// Id is used as index
-							'Name' => $service['Name'],
-							'Type' => $service['Type'],
-							'Domain' =>$service['Domain'],
-							//'DisplayName' => substr($device[0]['TXTRecords'][6], 3),
-							'DisplayName' => $displayName
+							Properties::NAME => $service[Properties::NAME],
+							Properties::TYPE => $service[Properties::TYPE],
+							Properties::DOMAIN =>$service[Properties::DOMAIN],
+							Properties::DISPLAYNAME => $displayName
 						];	
 				} else
-					$this->LogMessage('Returned TXT-records are invalid', KL_ERROR);
+					$this->LogMessage(Errors::INVALIDRESPONSE, KL_ERROR);
 			}
 
 			return $devices;
@@ -111,7 +106,7 @@
 		private function GetCCInstances () : array {
 			$devices = [];
 
-			$instanceIds = IPS_GetInstanceListByModuleID('{935F2596-C56A-88DB-A2B8-1A4A06605206}');
+			$instanceIds = IPS_GetInstanceListByModuleID(Modules::CHROMECAST);
         	
         	foreach ($instanceIds as $instanceId) {
 				$devices[$instanceId] = IPS_GetProperty($instanceId, 'Id');

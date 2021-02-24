@@ -68,7 +68,7 @@
 
 		private function Update() {
 			// Try to find a DNS SD instance
-			$instanceIds = IPS_GetInstanceListByModuleID('{780B2D48-916C-4D59-AD35-5A429B2355A5}');
+			$instanceIds = IPS_GetInstanceListByModuleID(Modules::DNSSD);
 			if(count($instanceIds)==0) {
 				$this->LogMessage(Errors::MISSINGDNSSD, KL_ERROR);
 				return;
@@ -81,7 +81,7 @@
 			$services = @ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
 			if($services!==false) {
 				foreach($services as $service) {
-					if(strcasecmp($service['Name'], $name)==0) {
+					if(strcasecmp($service[Properties::NAME], $name)==0) {
 						$found = true;
 						break;
 					}

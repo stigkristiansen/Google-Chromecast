@@ -1,5 +1,17 @@
 <?php
+	trait DnsSD {
+		private function GetServiceTXTRecord($Records, $Key) {
+			foreach($Records as $record) {
+				if(stristr($record, $Key.'=')!==false)
+					return substr($record, 3);
+			}
+		}
+
+		return false;
+	}
+
 	class ChromecastDiscovery extends IPSModule {
+		use DnsSD;
 
 		public function Create()
 		{
@@ -78,20 +90,28 @@
 			$dnssdId = $instanceIds[0];
 			//IPS_LogMessage('Chromecast Discovery','Found DNS SD: '. (string)$dnssdId );
 
-			$services = ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
+			$services = @ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
 
 			//IPS_LogMessage('Chromecast Discovery','Services found: '. json_encode($services));
 
 			foreach($services as $service) {
-				$device = ZC_QueryService ($dnssdId , $service['Name'], $service['Type'] ,  $service['Domain']); 
-				if(count($device)==0)
+				$device = @ZC_QueryService ($dnssdId , $service['Name'], $service['Type'] ,  $service['Domain']); 
+				if($device===false)
 					continue;
-					$devices[substr($device[0]['TXTRecords'][0], 3)] = [	// Id is used as index
-						'Name' => $service['Name'],
-						'Type' => $service['Type'],
-						'Domain' =>$service['Domain'],
-						'DisplayName' => substr($device[0]['TXTRecords'][6], 3),
-					];	
+				
+				$displayName = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'fn')
+				$id = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'id')
+				if($displayName!==false && $id!==false) {
+					//$devices[substr($device[0]['TXTRecords'][0], 3)] = [	// Id is used as index
+						$devices[$id] = [	// Id is used as index
+							'Name' => $service['Name'],
+							'Type' => $service['Type'],
+							'Domain' =>$service['Domain'],
+							//'DisplayName' => substr($device[0]['TXTRecords'][6], 3),
+							'DisplayName' => $displayName
+						];	
+				} else
+					$this->LogMessage('Returned TXT-records are invalid', KL_ERROR);
 			}
 
 			return $devices;

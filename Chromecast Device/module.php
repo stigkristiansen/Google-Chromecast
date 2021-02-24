@@ -39,7 +39,7 @@
 
 			if(!$this->ReadAttributeBoolean(Attributes::RENAME_IDENT)) {
 				$this->WriteAttributeBoolean(Attributes::RENAME_IDENT, true);
-				IPS_SetName($this->InstanceID, $this->ReadPropertyString(Properties::DisplayName));
+				IPS_SetName($this->InstanceID, $this->ReadPropertyString(Properties::DISPLAYNAME));
 			}
 		}
 

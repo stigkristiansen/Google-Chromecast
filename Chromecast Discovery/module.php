@@ -1,17 +1,17 @@
 <?php
-	trait DnsSD {
+	trait ServiceDiscovery {
 		private function GetServiceTXTRecord($Records, $Key) {
 			foreach($Records as $record) {
 				if(stristr($record, $Key.'=')!==false)
 					return substr($record, 3);
 			}
-		}
 
-		return false;
+			return false;
+		}
 	}
 
 	class ChromecastDiscovery extends IPSModule {
-		use DnsSD;
+		use ServiceDiscovery;
 
 		public function Create()
 		{

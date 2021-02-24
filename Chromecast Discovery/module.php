@@ -73,7 +73,7 @@
 		}
 	
 		private function DiscoverCCDevices() : array {
-			$this->LogMessage(Messages::DISCOVER, KL_SUCCESS);
+			//$this->LogMessage(Messages::DISCOVER, KL_SUCCESS);
 			
 			$devices = [];
 

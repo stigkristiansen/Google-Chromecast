@@ -37,7 +37,7 @@
 			if (IPS_GetKernelRunlevel() == KR_READY)
 				$this->SetTimer();
 
-			if(!this->ReadAttributeBoolean(Attributes::RENAME_IDENT)) {
+			if(!$this->ReadAttributeBoolean(Attributes::RENAME_IDENT)) {
 				$this->WriteAttributeBoolean(Attributes::RENAME_IDENT, true);
 				IPS_SetName($this->InstanceID, $this->ReadPropertyString(Properties::DisplayName));
 			}

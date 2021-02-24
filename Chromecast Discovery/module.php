@@ -39,7 +39,6 @@
 				$instanceId = array_search($id, $ccInstances);
 				if ($instanceId !== false) {
 					unset($ccInstances[$instanceId]);
-					//$value['DisplayName'] = IPS_GetName($instanceId);
 					$value['instanceID'] = $instanceId;
 				}
 				

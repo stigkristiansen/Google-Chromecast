@@ -15,6 +15,10 @@
         const INVALIDRESPONSE = 'Returned TXT-records are invalid';
     }
 
+    class Messages {
+        const DISCOVER = 'Discovering Chromecast devices...';
+    }
+
     class Actions {
         const UPDATE = 'CCDEUpdate';
     }

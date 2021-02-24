@@ -73,6 +73,8 @@
 		}
 	
 		private function DiscoverCCDevices() : array {
+			$this->LogMessage(Messages::DISCOVER, KL_SUCCESS);
+			
 			$devices = [];
 
 			// Find DNS SD Instance

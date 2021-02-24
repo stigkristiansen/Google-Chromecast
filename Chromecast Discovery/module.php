@@ -1,14 +1,7 @@
 <?php
-	trait ServiceDiscovery {
-		private function GetServiceTXTRecord($Records, $Key) {
-			foreach($Records as $record) {
-				if(stristr($record, $Key.'=')!==false)
-					return substr($record, 3);
-			}
+	declare(strict_types=1);
 
-			return false;
-		}
-	}
+	require_once(__DIR__ . "/../libs/autoload.php");
 
 	class ChromecastDiscovery extends IPSModule {
 		use ServiceDiscovery;
@@ -95,7 +88,7 @@
 			//IPS_LogMessage('Chromecast Discovery','Services found: '. json_encode($services));
 
 			foreach($services as $service) {
-				$device = @ZC_QueryService ($dnssdId , $service['Name'], $service['Type'] ,  $service['Domain']); 
+				$device = @ZC_QueryServiceEx ($dnssdId , $service['Name'], $service['Type'] ,  $service['Domain'], 500); 
 				if($device===false)
 					continue;
 				

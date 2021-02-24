@@ -1,33 +1,12 @@
 <?php
-	class Timers {
-		const UPDATE = 'CCDEUpdate';
-	}
+	declare(strict_types=1);
 
-	class Variables {
-		const SOURCE_IDENT = 'Source';
-		const SOURCE_TEXT = 'Source';
-	}
+	require_once(__DIR__ . "/../libs/autoload.php");
 
-	class Errors {
-		const UNEXPECTED  = 'An unexpected error occured. The error was : %s';
-		const MISSINGDNSSD = 'Did not find any instances of DNS-SD';
-	}
-
-	class Actions {
-		const UPDATE = 'CCDEUpdate';
-	}
-
-	class Properties {
-		const IP = 'Ip';
-		const PORT = 'Port';
-		const NAME = 'Name';
-		const TYPE = 'Type';
-		const DOMAIN = 'Domain';
-		const DISPLAYNAME = 'DisplayName';
-		const ID = 'Id';
-	}
+	
 
 	class ChromecastDevice extends IPSModule {
+		use ServiceDiscovery;
 
 		public function Create() {
 			//Never delete this line!

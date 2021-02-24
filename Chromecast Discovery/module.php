@@ -73,7 +73,7 @@
 			$devices = [];
 
 			// Find DNS SD Instance
-			$instanceIds = IPS_GetInstanceListByModuleID(Modules:DNSSD);
+			$instanceIds = IPS_GetInstanceListByModuleID(Modules::DNSSD);
 			if(count($instanceIds)==0)
 				return $devices;
 

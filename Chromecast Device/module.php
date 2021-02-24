@@ -83,11 +83,16 @@
 			$type = $this->ReadPropertyString(Properties::TYPE);
 			$domain = $this->ReadPropertyString(Properties::DOMAIN); 
 			
-			$device = ZC_QueryService ($dnssdId , $name, $type ,  $domain); 
+			$device = @ZC_QueryServiceEx($dnssdId , $name, $type ,  $domain, 500); 
 
-			if(count($device)>0)
-				$this->SetValueEx(Variables::SOURCE_IDENT, substr($device[0]['TXTRecords'][11], 3));
-			else
+			if($device!==false) {
+				$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');
+				if($source!==false)
+					$this->SetValueEx(Variables::SOURCE_IDENT, $source);
+				else
+					$this->SetValueEx(Variables::SOURCE_IDENT, '');	
+				//$this->SetValueEx(Variables::SOURCE_IDENT, substr($device[0]['TXTRecords'][11], 3));
+			} else
 				$this->SetValueEx(Variables::SOURCE_IDENT, '');
 		}
 
@@ -96,16 +101,4 @@
 			if($oldValue!=$Value)
 				$this->SetValue($Ident, $Value);
 		}
-
-		private function PingTest(string $IPAddress) {
-			$wait = 500;
-			for($count=0;$count<3;$count++) {
-				if(Sys_Ping($IPAddress, $wait))
-					return true;
-				$wait*=2;
-			}
-	
-			return false;
-		}
-	
 	}

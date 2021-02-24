@@ -46,6 +46,7 @@
 				
 				$value['create'] = [
 					'moduleID'      => Modules::CHROMECAST,
+					'name'			=> $device[Properties::DISPLAYNAME],
 					'configuration' => [
 						Properties::DISPLAYNAME	=> $device[Properties::DISPLAYNAME],
 						Properties::NAME 		=> $device[Properties::NAME],

@@ -17,7 +17,7 @@
 			$this->RegisterPropertyString(Properties::ID, '');
 
 			$source = $this->RegisterVariableString(Variables::SOURCE_IDENT, Variables::SOURCE_TEXT, '', 1);
-			$this->EnableAction(Variables::SOURCE_IDENT);
+			//$this->EnableAction(Variables::SOURCE_IDENT);
 			//$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, "if(IPS_VariableExists(".$source.")) RequestAction(".$source.", '" .Actions::UPDATE."');"); 
 			$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, "CCDE_Update(".$this->InstanceID.");"); 
 			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
@@ -34,7 +34,6 @@
 
 			if (IPS_GetKernelRunlevel() == KR_READY)
 				$this->SetTimer();
-
 		}
 
 		public function MessageSink($TimeStamp, $SenderID, $Message, $Data) {
@@ -48,25 +47,7 @@
 			$this->SetTimerInterval(Timers::UPDATE  . (string) $this->InstanceID, $Interval);
 		}
 	
-		public function RequestAction($Ident, $Value) {
-			try {
-				switch ($Ident) {
-					case Variables::SOURCE_IDENT:
-						switch($Value) {
-							case Actions::UPDATE: 
-								$this->Update();
-								break;
-						}
-						break;
-				}
-		 
-			} catch(Exception $e) {
-				$this->LogMessage(sprintf(Errors::UNEXPECTED,  $e->getMessage()), KL_ERROR);
-			}
-		}
-
 		public function Update() {
-			IPS_LogMessage('Chromecast Device', 'Inside Update();');
 			try {
 				$this->SetTimer(0);				
 				

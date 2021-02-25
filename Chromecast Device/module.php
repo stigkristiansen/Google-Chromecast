@@ -66,6 +66,7 @@
 		}
 
 		public function Update() {
+			IPS_LogMessage('Chromecast Device', 'Inside Update();');
 			try {
 				$this->SetTimer(0);				
 				

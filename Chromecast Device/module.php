@@ -18,8 +18,8 @@
 
 			$source = $this->RegisterVariableString(Variables::SOURCE_IDENT, Variables::SOURCE_TEXT, '', 1);
 			$this->EnableAction(Variables::SOURCE_IDENT);
-			$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, "if(IPS_VariableExists(".$source.")) RequestAction(".$source.", '" .Actions::UPDATE."');"); 
-			
+			//$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, "if(IPS_VariableExists(".$source.")) RequestAction(".$source.", '" .Actions::UPDATE."');"); 
+			$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, "CCDE_Update(".$this->InstanceID.");"); 
 			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
 		}
 
@@ -44,13 +44,11 @@
 				$this->SetTimer();
 		}
 
-		private function SetTimer() {
-			//IPS_LogMessage('Chromecast Device', 'Inside SetTimer()');
-			$this->SetTimerInterval(Timers::UPDATE  . (string) $this->InstanceID, 5000);
+		private function SetTimer($Interval = 5000) {
+			$this->SetTimerInterval(Timers::UPDATE  . (string) $this->InstanceID, $Interval);
 		}
 	
 		public function RequestAction($Ident, $Value) {
-			//IPS_LogMessage('Chromecast Device', 'Inside RequestAction()');
 			try {
 				switch ($Ident) {
 					case Variables::SOURCE_IDENT:
@@ -67,44 +65,52 @@
 			}
 		}
 
-		private function Update() {
-			// Try to find a DNS SD instance
-			$instanceIds = IPS_GetInstanceListByModuleID(Modules::DNSSD);
-			if(count($instanceIds)==0) {
-				$this->LogMessage(Errors::MISSINGDNSSD, KL_ERROR);
-				return;
-			}
-			
-			$dnssdId = $instanceIds[0];
+		public function Update() {
+			try {
+				$this->SetTimer(0);				
+				
+				// Try to find a DNS SD instance
+				$instanceIds = IPS_GetInstanceListByModuleID(Modules::DNSSD);
+				if(count($instanceIds)==0) {
+					$this->LogMessage(Errors::MISSINGDNSSD, KL_ERROR);
+					return;
+				}
+				
+				$dnssdId = $instanceIds[0];
 
-			$found = false;
-			$name = $this->ReadPropertyString(Properties::NAME);
-			$services = @ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
-			if($services!==false) {
-				foreach($services as $service) {
-					if(strcasecmp($service[Properties::NAME], $name)==0) {
-						$found = true;
-						break;
+				$found = false;
+				$name = $this->ReadPropertyString(Properties::NAME);
+				$services = @ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
+				if($services!==false) {
+					foreach($services as $service) {
+						if(strcasecmp($service[Properties::NAME], $name)==0) {
+							$found = true;
+							break;
+						}
 					}
 				}
-			}
 
-			if($found) {
-				$type = $this->ReadPropertyString(Properties::TYPE);
-				$domain = $this->ReadPropertyString(Properties::DOMAIN); 
-				
-				$device = @ZC_QueryServiceEx($dnssdId , $name, $type ,  $domain, 500); 
+				if($found) {
+					$type = $this->ReadPropertyString(Properties::TYPE);
+					$domain = $this->ReadPropertyString(Properties::DOMAIN); 
+					
+					$device = @ZC_QueryServiceEx($dnssdId , $name, $type ,  $domain, 500); 
 
-				if(count($device)>0) {
-					$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');
-					if($source!==false)
-						$this->SetValueEx(Variables::SOURCE_IDENT, $source);
-					else
-						$this->SetValueEx(Variables::SOURCE_IDENT, '');	
+					if(count($device)>0) {
+						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');
+						if($source!==false)
+							$this->SetValueEx(Variables::SOURCE_IDENT, $source);
+						else
+							$this->SetValueEx(Variables::SOURCE_IDENT, '');	
+					} else
+						$this->SetValueEx(Variables::SOURCE_IDENT, '');
 				} else
 					$this->SetValueEx(Variables::SOURCE_IDENT, '');
-			} else
-				$this->SetValueEx(Variables::SOURCE_IDENT, '');
+			} catch(Exception $e) {
+					$this->LogMessage(sprintf(Errors::UNEXPECTED,  $e->getMessage()), KL_ERROR);
+			} finally {
+				$this->SetTimer();
+			}
 		}
 
 		private function SetValueEx(string $Ident, $Value) {

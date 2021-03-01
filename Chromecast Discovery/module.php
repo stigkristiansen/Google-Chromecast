@@ -51,7 +51,7 @@
 					unset($ccInstances[$instanceId]); // Remove from list to avoid duplicates
 					$value[Properties::DISPLAYNAME] = IPS_GetName($instanceId);
 					$value['instanceID'] = $instanceId;
-				} else {
+				} //else {
 					// It's not created earlier, add information for creating the instance
 					$value['create'] = [
 						'moduleID'      => Modules::CHROMECAST,
@@ -64,7 +64,7 @@
 							Properties::ID 			=> $id
 						]
 					];
-				}
+				//}
 				$values[] = $value;
 			}
 

@@ -11,7 +11,7 @@
 		public function __construct($InstanceID) {
 			parent::__construct($InstanceID);
 	
-			$this->dnsSdId = $this->GetDnsSdId();
+			$this->dnsSdId = $this->GetDnsSdId(); // Defined in traits.php
 		}
 
 		public function Create()
@@ -58,8 +58,8 @@
 					'configuration' => [
 						Properties::DISPLAYNAME	=> $device[Properties::DISPLAYNAME],
 						Properties::NAME 		=> $device[Properties::NAME],
-						Properties::TYPE		=> $device[Properties::TYPE],
-						Properties::DOMAIN 		=> $device[Properties::DOMAIN],
+						//Properties::TYPE		=> $device[Properties::TYPE],
+						//Properties::DOMAIN 		=> $device[Properties::DOMAIN],
 						Properties::ID 			=> $id
 					]
 				];
@@ -99,8 +99,8 @@
 					if($displayName!==false && $id!==false) {
 							$devices[$id] = [	// Id is used as index
 								Properties::NAME => $service[Properties::NAME],
-								Properties::TYPE => $service[Properties::TYPE],
-								Properties::DOMAIN =>$service[Properties::DOMAIN],
+								//Properties::TYPE => $service[Properties::TYPE],
+								//Properties::DOMAIN =>$service[Properties::DOMAIN],
 								Properties::DISPLAYNAME => $displayName
 							];	
 					} else

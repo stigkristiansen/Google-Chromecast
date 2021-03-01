@@ -11,7 +11,7 @@
 		public function __construct($InstanceID) {
 			parent::__construct($InstanceID);
 	
-			$this->dnsSdId = $this->GetDnsSdId();
+			$this->dnsSdId = $this->GetDnsSdId(); // Defined in traits.php
 		}
 
 		public function Create() {
@@ -24,10 +24,10 @@
 			$this->RegisterPropertyString(Properties::DISPLAYNAME, '');
 			$this->RegisterPropertyString(Properties::ID, '');
 
-			$source = $this->RegisterVariableString(Variables::SOURCE_IDENT, Variables::SOURCE_TEXT, '', 1);
-			//$this->EnableAction(Variables::SOURCE_IDENT);
-			//$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, "if(IPS_VariableExists(".$source.")) RequestAction(".$source.", '" .Actions::UPDATE."');"); 
+			$this->RegisterVariableString(Variables::SOURCE_IDENT, Variables::SOURCE_TEXT, '', 1);
+			
 			$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, "CCDE_Update(".$this->InstanceID.");"); 
+			
 			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
 		}
 
@@ -79,6 +79,7 @@
 					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type ,  $domain, 500); 
 
 					if(count($device)>0) {
+						$this->read
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');
 						if($source!==false)
 							$this->SetValueEx(Variables::SOURCE_IDENT, $source);

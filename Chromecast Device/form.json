@@ -12,17 +12,6 @@
         },
         {   
             "type": "ValidationTextBox",
-            "name": "Type", "caption": "Type",
-            "enabled": false
-        },
-        
-        {   
-            "type": "ValidationTextBox",
-            "name": "Domain", "caption": "Domain",
-            "enabled": false
-        },
-        {   
-            "type": "ValidationTextBox",
             "name": "Id", "caption": "Device Id",
             "enabled": false
         }

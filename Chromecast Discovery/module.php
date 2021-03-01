@@ -6,6 +6,14 @@
 	class ChromecastDiscovery extends IPSModule {
 		use ServiceDiscovery;
 
+		private $dnsSdId;
+
+		public function __construct($InstanceID) {
+			parent::__construct($InstanceID);
+	
+			$this->dnsSdId = GetDnsSdId();
+		}
+
 		public function Create()
 		{
 			//Never delete this line!

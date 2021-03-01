@@ -87,23 +87,26 @@
 			
 			$services = @ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
 
-			foreach($services as $service) {
-				$device = @ZC_QueryServiceEx ($dnssdId , $service[Properties::NAME], $service[Properties::TYPE] ,  $service[Properties::DOMAIN], 500); 
-				if($device===false)
-					continue;
-				
-				$displayName = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'fn');
-				$id = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'id');
-				if($displayName!==false && $id!==false) {
-						$devices[$id] = [	// Id is used as index
-							Properties::NAME => $service[Properties::NAME],
-							Properties::TYPE => $service[Properties::TYPE],
-							Properties::DOMAIN =>$service[Properties::DOMAIN],
-							Properties::DISPLAYNAME => $displayName
-						];	
-				} else
-					$this->LogMessage(Errors::INVALIDRESPONSE, KL_ERROR);
-			}
+			if($services!==false) {
+				foreach($services as $service) {
+					$device = @ZC_QueryServiceEx ($dnssdId , $service[Properties::NAME], $service[Properties::TYPE] ,  $service[Properties::DOMAIN], 500); 
+					if($device===false)
+						continue;
+					
+					$displayName = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'fn');
+					$id = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'id');
+					if($displayName!==false && $id!==false) {
+							$devices[$id] = [	// Id is used as index
+								Properties::NAME => $service[Properties::NAME],
+								Properties::TYPE => $service[Properties::TYPE],
+								Properties::DOMAIN =>$service[Properties::DOMAIN],
+								Properties::DISPLAYNAME => $displayName
+							];	
+					} else
+						$this->LogMessage(Errors::INVALIDRESPONSE, KL_ERROR);
+				}
+			} else
+				$this->LogMessage(Errors::INVALIDRESPONSE, KL_ERROR);
 
 			return $devices;
 		}

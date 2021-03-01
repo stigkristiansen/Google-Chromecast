@@ -11,7 +11,7 @@
 		public function __construct($InstanceID) {
 			parent::__construct($InstanceID);
 	
-			$this->dnsSdId = GetDnsSdId();
+			$this->dnsSdId = $this->GetDnsSdId();
 		}
 
 		public function Create()

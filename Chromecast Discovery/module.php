@@ -45,10 +45,11 @@
 					'instanceID' 	=> 0,
 				];
 				
-				// Check if discoverd device have an instance that are created earlier. If found, set InstanceID
+				// Check if discoverd device have an instance that are created earlier. If found, set InstanceID and Display Name
 				$instanceId = array_search($id, $ccInstances);
 				if ($instanceId !== false) {
 					unset($ccInstances[$instanceId]);
+					$value[Properties::DISPLAYNAME] = IPS_GetName($instanceId);
 					$value['instanceID'] = $instanceId;
 				}
 				
@@ -70,8 +71,8 @@
 			// Add devices that are not discovered, but created earlier
 			foreach ($ccInstances as $instanceId => $id) {
 				$values[] = [
-					'DisplayName'   => IPS_GetProperty($instanceId, Properties::DISPLAYNAME), 
-					'instanceID' 	=> $instanceId
+					Properties::DISPLAYNAME => IPS_GetName($instanceId), //IPS_GetProperty($instanceId, Properties::DISPLAYNAME), 
+					'instanceID' 			=> $instanceId
 				];
 			}
 

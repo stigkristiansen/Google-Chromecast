@@ -19,8 +19,8 @@
 			parent::Create();
 
 			$this->RegisterPropertyString(Properties::NAME, '');
-			$this->RegisterPropertyString(Properties::TYPE, '');
-			$this->RegisterPropertyString(Properties::DOMAIN, '');
+			//$this->RegisterPropertyString(Properties::TYPE, '');
+			//$this->RegisterPropertyString(Properties::DOMAIN, '');
 			$this->RegisterPropertyString(Properties::DISPLAYNAME, '');
 			$this->RegisterPropertyString(Properties::ID, '');
 

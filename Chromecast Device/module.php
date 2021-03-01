@@ -21,7 +21,7 @@
 			$this->RegisterPropertyString(Properties::NAME, '');
 			//$this->RegisterPropertyString(Properties::TYPE, '');
 			//$this->RegisterPropertyString(Properties::DOMAIN, '');
-			$this->RegisterPropertyString(Properties::DISPLAYNAME, '');
+			//$this->RegisterPropertyString(Properties::DISPLAYNAME, '');
 			$this->RegisterPropertyString(Properties::ID, '');
 
 			$this->RegisterVariableString(Variables::SOURCE_IDENT, Variables::SOURCE_TEXT, '', 1);

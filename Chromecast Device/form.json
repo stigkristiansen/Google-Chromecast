@@ -2,11 +2,6 @@
     "elements": [
         {   
             "type": "ValidationTextBox",
-            "name": "DisplayName", "caption": "Display Name",
-            "enabled": false
-        },
-        {   
-            "type": "ValidationTextBox",
             "name": "Name", "caption": "Service Name",
             "enabled": false
         },

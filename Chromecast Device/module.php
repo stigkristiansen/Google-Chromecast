@@ -60,31 +60,35 @@
 				$this->SetTimer(0);				
 				
 				// Try to find a DNS SD instance
-				$instanceIds = IPS_GetInstanceListByModuleID(Modules::DNSSD);
+				/*$instanceIds = IPS_GetInstanceListByModuleID(Modules::DNSSD);
 				if(count($instanceIds)==0) {
 					$this->LogMessage(Errors::MISSINGDNSSD, KL_ERROR);
 					return;
 				}
 				
 				$dnssdId = $instanceIds[0];
-
+				*/
+				$type = '';
+				$domain = '';
 				$found = false;
 				$name = $this->ReadPropertyString(Properties::NAME);
-				$services = @ZC_QueryServiceTypeEx($dnssdId, "_googlecast._tcp", "", 500);
+				$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", 500);
 				if($services!==false) {
 					foreach($services as $service) {
 						if(strcasecmp($service[Properties::NAME], $name)==0) {
 							$found = true;
+							$domain = $service[Properties::DOMAIN];
+							$type = $service[Properties::TYPE];
 							break;
 						}
 					}
 				}
 
 				if($found) {
-					$type = $this->ReadPropertyString(Properties::TYPE);
-					$domain = $this->ReadPropertyString(Properties::DOMAIN); 
+					//$type = $this->ReadPropertyString(Properties::TYPE);
+					//$domain = $this->ReadPropertyString(Properties::DOMAIN); 
 					
-					$device = @ZC_QueryServiceEx($dnssdId , $name, $type ,  $domain, 500); 
+					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type ,  $domain, 500); 
 
 					if(count($device)>0) {
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');

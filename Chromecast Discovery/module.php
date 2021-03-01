@@ -87,12 +87,12 @@
 			$devices = [];
 
 			// Find DNS SD Instance
-			$instanceIds = IPS_GetInstanceListByModuleID(Modules::DNSSD);
+			/*$instanceIds = IPS_GetInstanceListByModuleID(Modules::DNSSD);
 			if(count($instanceIds)==0)
 				return $devices;
 
 			$dnssdId = $instanceIds[0];
-			
+			*/
 			$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", 500);
 
 			if($services!==false) {

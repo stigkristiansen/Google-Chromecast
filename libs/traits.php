@@ -11,5 +11,16 @@
 
 			return false;
 		}
+
+		$dnsSdId=0;
+		protected function GetDnsSdId() {
+			$instanceIds = IPS_GetInstanceListByModuleID(Modules::DNSSD);
+			if(count($instanceIds)==0) {
+				$this->LogMessage(Errors::MISSINGDNSSD, KL_ERROR);
+				return;
+			}
+			
+			$this->dnsSdId = $instanceIds[0];
+		}
 	}
 

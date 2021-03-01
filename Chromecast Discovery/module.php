@@ -41,30 +41,30 @@
 			// Add devices that are discovered
 			foreach ($ccDevices as $id => $device) {
 				$value = [
-					Properties::DISPLAYNAME 	=> $device['DisplayName'],
-					'instanceID' 	=> 0,
+					Properties::DISPLAYNAME	=> $device['DisplayName'],
+					'instanceID' 			=> 0,
 				];
 				
 				// Check if discoverd device have an instance that are created earlier. If found, set InstanceID and Display Name
 				$instanceId = array_search($id, $ccInstances);
 				if ($instanceId !== false) {
-					unset($ccInstances[$instanceId]);
+					unset($ccInstances[$instanceId]); // Remove from list to avoid duplicates
 					$value[Properties::DISPLAYNAME] = IPS_GetName($instanceId);
 					$value['instanceID'] = $instanceId;
+				} else {
+					// It's not created earlier, add information for creating the instance
+					$value['create'] = [
+						'moduleID'      => Modules::CHROMECAST,
+						'name'			=> $device[Properties::DISPLAYNAME],
+						'configuration' => [
+							//Properties::DISPLAYNAME	=> $device[Properties::DISPLAYNAME],
+							Properties::NAME 		=> $device[Properties::NAME],
+							//Properties::TYPE		=> $device[Properties::TYPE],
+							//Properties::DOMAIN 		=> $device[Properties::DOMAIN],
+							Properties::ID 			=> $id
+						]
+					];
 				}
-				
-				$value['create'] = [
-					'moduleID'      => Modules::CHROMECAST,
-					'name'			=> $device[Properties::DISPLAYNAME],
-					'configuration' => [
-						//Properties::DISPLAYNAME	=> $device[Properties::DISPLAYNAME],
-						Properties::NAME 		=> $device[Properties::NAME],
-						//Properties::TYPE		=> $device[Properties::TYPE],
-						//Properties::DOMAIN 		=> $device[Properties::DOMAIN],
-						Properties::ID 			=> $id
-					]
-				];
-				
 				$values[] = $value;
 			}
 

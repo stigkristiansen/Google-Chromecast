@@ -59,15 +59,6 @@
 			try {
 				$this->SetTimer(0);				
 				
-				// Try to find a DNS SD instance
-				/*$instanceIds = IPS_GetInstanceListByModuleID(Modules::DNSSD);
-				if(count($instanceIds)==0) {
-					$this->LogMessage(Errors::MISSINGDNSSD, KL_ERROR);
-					return;
-				}
-				
-				$dnssdId = $instanceIds[0];
-				*/
 				$type = '';
 				$domain = '';
 				$found = false;
@@ -85,9 +76,6 @@
 				}
 
 				if($found) {
-					//$type = $this->ReadPropertyString(Properties::TYPE);
-					//$domain = $this->ReadPropertyString(Properties::DOMAIN); 
-					
 					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type ,  $domain, 500); 
 
 					if(count($device)>0) {

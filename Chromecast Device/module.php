@@ -79,7 +79,6 @@
 					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type ,  $domain, 500); 
 
 					if(count($device)>0) {
-						$this->read
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');
 						if($source!==false)
 							$this->SetValueEx(Variables::SOURCE_IDENT, $source);

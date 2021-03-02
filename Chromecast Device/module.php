@@ -23,7 +23,7 @@
 
 			$this->RegisterVariableString(Variables::SOURCE_IDENT, Variables::SOURCE_TEXT, '', 1);
 			
-			$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, "if(IPS_InstanceExists(".$this->InstanceID.")) CCDE_Update(".$this->InstanceID.");"); 
+			$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, "if(IPS_InstanceExists(" . (string) $this->InstanceID . ")) CCDE_Update(" . (string) $this->InstanceID . ");"); 
 			
 			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
 		}
@@ -49,7 +49,7 @@
 		}
 
 		private function SetTimer($Interval = 5000) {
-			$this->SetTimerInterval(Timers::UPDATE  . (string) $this->InstanceID, $Interval);
+			$this->SetTimerInterval(Timers::UPDATE . (string) $this->InstanceID, $Interval);
 		}
 	
 		public function Update() {

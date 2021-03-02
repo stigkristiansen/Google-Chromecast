@@ -73,13 +73,15 @@
 				}
 
 				if($found) {
-					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type ,  $domain, 500); 
+					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type , $domain, 500); 
 
 					if(count($device)>0) {
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');
-						if($source!==false)
+						if($source!==false) {
+							if(str_starts_with($source, 'Casting: '))
+								$source = substr($source, 9);
 							$this->SetValueEx(Variables::SOURCE_IDENT, $source);
-						else
+						} else
 							$this->SetValueEx(Variables::SOURCE_IDENT, '');	
 					} else
 						$this->SetValueEx(Variables::SOURCE_IDENT, '');

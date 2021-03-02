@@ -29,6 +29,7 @@
         const DOMAIN = 'Domain';
         const DISPLAYNAME = 'DisplayName';
         const ID = 'Id';
+        const DISCOVERTIMEOUT = 'DiscoverTimeout';
     }
 
     class Modules {

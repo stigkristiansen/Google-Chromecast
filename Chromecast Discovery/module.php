@@ -18,6 +18,8 @@
 		{
 			//Never delete this line!
 			parent::Create();
+
+			$this->RegisterPropertyInteger(Properties::DISCOVERTIMEOUT, 500);
 		}
 
 		public function Destroy()
@@ -84,11 +86,11 @@
 			
 			$devices = [];
 
-			$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", 500);
+			$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", $this->ReadPropertyInteger(Properties::DISCOVERTIMEOUT));
 
 			if($services!==false) {
 				foreach($services as $service) {
-					$device = @ZC_QueryServiceEx ($this->dnsSdId , $service[Properties::NAME], $service[Properties::TYPE] ,  $service[Properties::DOMAIN], 500); 
+					$device = @ZC_QueryServiceEx ($this->dnsSdId , $service[Properties::NAME], $service[Properties::TYPE] ,  $service[Properties::DOMAIN], $this->ReadPropertyInteger(Properties::DISCOVERTIMEOUT)); 
 					if($device===false || count($device)==0)
 						continue;
 					

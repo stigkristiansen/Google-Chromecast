@@ -1,7 +1,7 @@
 {
     "actions": [
         {
-            "type": "NumberSpinner", "name": "DiscoverTimeout", "caption": "Timeout", "suffix": "seconds"
+            "type": "NumberSpinner", "name": "DiscoverTimeout", "caption": "Discover Timeout", "suffix": "milliseconds"
         },
         {
             "type": "Configurator",

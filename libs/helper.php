@@ -2,6 +2,7 @@
 
     class Timers {
         const UPDATE = 'CCDEUpdate';
+        const INTERVAL = 5000;
     }
 
     class Variables {

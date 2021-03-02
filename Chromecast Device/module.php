@@ -18,6 +18,8 @@
 			//Never delete this line!
 			parent::Create();
 
+			$this->RegisterPropertyInteger(Properties::DISCOVERTIMEOUT, 500);
+
 			$this->RegisterPropertyString(Properties::NAME, '');
 			$this->RegisterPropertyString(Properties::ID, '');
 
@@ -48,7 +50,7 @@
 				$this->SetTimer();
 		}
 
-		private function SetTimer($Interval = 5000) {
+		private function SetTimer($Interval = Timers::INTERVAL) {
 			$this->SetTimerInterval(Timers::UPDATE . (string) $this->InstanceID, $Interval);
 		}
 	
@@ -60,7 +62,7 @@
 				$domain = '';
 				$found = false;
 				$name = $this->ReadPropertyString(Properties::NAME);
-				$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", 500);
+				$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", $this->ReadPropertyInteger(Properties::DISCOVERTIMEOUT));
 				if($services!==false) {
 					foreach($services as $service) {
 						if(strcasecmp($service[Properties::NAME], $name)==0) {
@@ -73,7 +75,7 @@
 				}
 
 				if($found) {
-					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type , $domain, 500); 
+					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type , $domain, $this->ReadPropertyInteger(Properties::DISCOVERTIMEOUT)); 
 
 					if($device!==false && count($device)>0) {
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');  // Defined in trait ServiceDiscovery

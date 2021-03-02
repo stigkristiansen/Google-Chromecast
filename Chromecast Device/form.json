@@ -1,5 +1,8 @@
 {
     "elements": [
+        {
+            "type": "NumberSpinner", "name": "DiscoverTimeout", "caption": "Discover Timeout", "suffix": "milliseconds"
+        },
         {   
             "type": "ValidationTextBox",
             "name": "Name", "caption": "Service Name",

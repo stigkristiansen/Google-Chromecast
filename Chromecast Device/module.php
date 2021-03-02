@@ -78,7 +78,7 @@
 					if(count($device)>0) {
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');
 						if($source!==false) {
-							if(str_starts_with($source, 'Casting: '))
+							if(strpos($source, 'Casting: ')===0)
 								$source = substr($source, 9);
 							$this->SetValueEx(Variables::SOURCE_IDENT, $source);
 						} else

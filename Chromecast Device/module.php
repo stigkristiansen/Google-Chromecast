@@ -19,14 +19,11 @@
 			parent::Create();
 
 			$this->RegisterPropertyString(Properties::NAME, '');
-			//$this->RegisterPropertyString(Properties::TYPE, '');
-			//$this->RegisterPropertyString(Properties::DOMAIN, '');
-			//$this->RegisterPropertyString(Properties::DISPLAYNAME, '');
 			$this->RegisterPropertyString(Properties::ID, '');
 
 			$this->RegisterVariableString(Variables::SOURCE_IDENT, Variables::SOURCE_TEXT, '', 1);
 			
-			$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, "CCDE_Update(".$this->InstanceID.");"); 
+			$this->RegisterTimer(Timers::UPDATE . (string) $this->InstanceID, 0, "if(IPS_InstanceExists(".$this->InstanceID.") CCDE_Update(".$this->InstanceID.");"); 
 			
 			$this->RegisterMessage(0, IPS_KERNELMESSAGE);
 		}

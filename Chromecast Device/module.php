@@ -11,7 +11,7 @@
 		public function __construct($InstanceID) {
 			parent::__construct($InstanceID);
 	
-			$this->dnsSdId = $this->GetDnsSdId(); // Defined in traits.php
+			$this->dnsSdId = $this->GetDnsSdId(); // Defined in trait ServiceDiscovery
 		}
 
 		public function Create() {
@@ -75,10 +75,10 @@
 				if($found) {
 					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type , $domain, 500); 
 
-					if(count($device)>0) {
-						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');
+					if($device!==false && count($device)>0) {
+						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');  // Defined in trait ServiceDiscovery
 						if($source!==false) {
-							if(strpos($source, 'Casting: ')===0)
+							if(strpos($source, 'Casting: ')===0)  // Remove "Casting:" 
 								$source = substr($source, 9);
 							$this->SetValueEx(Variables::SOURCE_IDENT, $source);
 						} else

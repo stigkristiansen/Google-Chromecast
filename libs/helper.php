@@ -24,8 +24,6 @@
     }
 
     class Properties {
-        const IP = 'Ip';
-        const PORT = 'Port';
         const NAME = 'Name';
         const TYPE = 'Type';
         const DOMAIN = 'Domain';

@@ -76,7 +76,7 @@
 			}
 
 			$form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
-			$form['actions'][1]['values'] = $values;
+			$form['actions'][0]['values'] = $values;
 	
 			return json_encode($form);
 		}

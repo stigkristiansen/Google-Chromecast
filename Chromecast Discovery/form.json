@@ -1,8 +1,10 @@
 {
-    "actions": [
+    "elements": [
         {
             "type": "NumberSpinner", "name": "DiscoverTimeout", "caption": "Discover Timeout", "suffix": "milliseconds"
-        },
+        }
+    ],
+    "actions": [
         {
             "type": "Configurator",
             "name": "Discovery",
@@ -23,3 +25,5 @@
         }
     ]
 }
+
+

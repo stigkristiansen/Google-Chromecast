@@ -45,7 +45,7 @@
 					'instanceID' 			=> 0,
 				];
 				
-				// Check if discoverd device have an instance that are created earlier. If found, set InstanceID and Display Name
+				// Check if discoverd device has an instance that is created earlier. If found, set InstanceID and DisplayName
 				$instanceId = array_search($id, $ccInstances);
 				if ($instanceId !== false) {
 					unset($ccInstances[$instanceId]); // Remove from list to avoid duplicates
@@ -57,8 +57,8 @@
 					'moduleID'      => Modules::CHROMECAST,
 					'name'			=> $device[Properties::DISPLAYNAME],
 					'configuration' => [
-						Properties::NAME 		=> $device[Properties::NAME],
-						Properties::ID 			=> $id
+						Properties::NAME => $device[Properties::NAME],
+						Properties::ID 	 => $id
 					]
 				];
 			
@@ -68,13 +68,13 @@
 			// Add devices that are not discovered, but created earlier
 			foreach ($ccInstances as $instanceId => $id) {
 				$values[] = [
-					Properties::DISPLAYNAME => IPS_GetName($instanceId), //IPS_GetProperty($instanceId, Properties::DISPLAYNAME), 
+					Properties::DISPLAYNAME => IPS_GetName($instanceId), 
 					'instanceID' 			=> $instanceId
 				];
 			}
 
 			$form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
-			$form['actions'][0]['values'] = $values;
+			$form['actions'][1]['values'] = $values;
 	
 			return json_encode($form);
 		}

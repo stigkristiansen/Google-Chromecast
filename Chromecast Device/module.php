@@ -78,20 +78,35 @@
 				}
 
 				if($found) {
+					$this->SendDebug('Chromecast', sprintf('Update: Found device "%s". Querying for more information', $name), 0);
+
 					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type , $domain, $this->ReadPropertyInteger(Properties::DISCOVERTIMEOUT)); 
 
 					if($device!==false && count($device)>0) {
+						$this->SendDebug('Chromecast', sprintf('Update: The query returned information for "%s"', $name), 0);
+						
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');  // Defined in trait ServiceDiscovery
 						if($source!==false) {
+							$this->SendDebug('Chromecast', sprintf('Update: Updating statusvariable "Source" for "%s"', $name), 0);
+
 							if(strpos($source, 'Casting: ')===0)  // Remove "Casting:" 
 								$source = substr($source, 9);
+
+							$this->SendDebug('Chromecast', sprintf('Update: New value for "Source" for "%s" is "%s"', $name, $source), 0);
+
 							$this->SetValueEx(Variables::SOURCE_IDENT, $source);
-						} else
+						} else {
+							$this->SendDebug('Chromecast', sprintf('Update: Did not find streaming information for "%s"', $name), 0);
 							$this->SetValueEx(Variables::SOURCE_IDENT, '');	
-					} else
+						}
+					} else {
+						$this->SendDebug('Chromecast', sprintf('Update: The query did not return any information for "%s"', $name), 0);
 						$this->SetValueEx(Variables::SOURCE_IDENT, '');
-				} else
+					}
+				} else {
+					$this->SendDebug('Chromecast', sprintf('Update: The device "%s" was not found', $name), 0);
 					$this->SetValueEx(Variables::SOURCE_IDENT, '');
+				}
 			} catch(Exception $e) {
 					$this->LogMessage(sprintf(Errors::UNEXPECTED,  $e->getMessage()), KL_ERROR);
 			} finally {

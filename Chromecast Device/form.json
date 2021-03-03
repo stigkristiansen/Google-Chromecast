@@ -2,16 +2,6 @@
     "elements": [
         {
             "type": "NumberSpinner", "name": "DiscoverTimeout", "caption": "Discovery Timeout", "suffix": "milliseconds"
-        },
-        {   
-            "type": "ValidationTextBox",
-            "name": "Name", "caption": "Service Name",
-            "enabled": false
-        },
-        {   
-            "type": "ValidationTextBox",
-            "name": "Id", "caption": "Device Id",
-            "enabled": false
         }
     ]
 }

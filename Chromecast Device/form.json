@@ -1,7 +1,7 @@
 {
     "elements": [
         {
-            "type": "NumberSpinner", "name": "DiscoverTimeout", "caption": "Discovery Timeout", "suffix": "milliseconds"
+            "type": "NumberSpinner", "name": "DiscoveryTimeout", "caption": "Discovery Timeout", "suffix": "milliseconds"
         }
     ]
 }

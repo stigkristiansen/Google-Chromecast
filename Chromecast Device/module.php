@@ -87,7 +87,7 @@
 						
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');  // Defined in trait ServiceDiscovery
 						if($source!==false) {
-							$this->SendDebug('Chromecast', sprintf(UPDATESTATUS, $name), 0);
+							$this->SendDebug('Chromecast', sprintf(Debug::UPDATESTATUS, $name), 0);
 
 							if(strpos($source, 'Casting: ')===0)  // Remove "Casting:" 
 								$source = substr($source, 9);

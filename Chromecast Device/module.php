@@ -20,8 +20,6 @@
 
 			$this->RegisterPropertyInteger(Properties::DISCOVERTIMEOUT, 500);
 
-			$this->RegisterAttributeString('Test', '');
-
 			$this->RegisterPropertyString(Properties::NAME, '');
 			$this->RegisterPropertyString(Properties::ID, '');
 
@@ -59,8 +57,6 @@
 		public function Update() {
 			try {
 				$this->SetTimer(0);	
-				
-				$this->LogMessage('This is a attribute: '. $this->ReadAttributeString('Test'));
 				
 				$type = '';
 				$domain = '';

@@ -39,14 +39,14 @@
     }
 
     class Debug {
-        const SEARCHING = 'Update: Searching for device with name "%s"';
-        const DEVICEFOUND = 'Update: Found device "%s". Querying for more information';
-        const QUERYOK = 'Update: The query returned information for "%s"';
-        const UPDATESTATUS = 'Update: Updating statusvariable "Source" for "%s"';
-        const NEWVALUE = 'Update: New value for "Source" for "%s" is "%s"';
-        const MISISNGSTREAMINGINFO = 'Update: Did not find streaming information for "%s"';
-        const QUERYNOINFO = 'Update: The query did not return any information for "%s"';
-        const DEVICENOTFOUND = 'Update: The device "%s" was not found';
+        const SEARCHING = 'Update(): Searching for device with name "%s"';
+        const DEVICEFOUND = 'Update(): Found device "%s". Querying for more information';
+        const QUERYOK = 'Update(): The query returned information for "%s"';
+        const UPDATESTATUS = 'Update(): Updating statusvariable "Source" for "%s"';
+        const NEWVALUE = 'Update(): New value for "Source" for "%s" is "%s"';
+        const MISISNGSTREAMINGINFO = 'Update(): Did not find streaming information for "%s"';
+        const QUERYNOINFO = 'Update(): The query did not return any information for "%s"';
+        const DEVICENOTFOUND = 'Update(): The device "%s" was not found';
         const NUMBERFOUND = 'GetCCInstances(): Added %d instances of Chromecast device(s) to the list';
         const GETTINGINSTANCES = 'GetCCInstances(): Getting list of all created Chromecast devices (module id: %s)';
         const DISCOVERYFAILED = 'DiscoverCCDevices(): The discovery of Chromecast devices failed';

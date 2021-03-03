@@ -57,11 +57,14 @@
 		public function Update() {
 			try {
 				$this->SetTimer(0);	
-				
+
 				$type = '';
 				$domain = '';
 				$found = false;
 				$name = $this->ReadPropertyString(Properties::NAME);
+
+				$this->SendDebug('Chromecast', sprintf('Update: Searching for device with name "%s"', $name), 0);
+
 				$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", $this->ReadPropertyInteger(Properties::DISCOVERTIMEOUT));
 				if($services!==false) {
 					foreach($services as $service) {

@@ -106,7 +106,7 @@
 						$displayName = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'fn');
 						$id = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'id');
 						if($displayName!==false && $id!==false) {
-							$this->SendDebug('Chromecast Discovery', sprintf(Debug::DEVICEFOUND, $service[Properties::NAME]), 0);
+							$this->SendDebug('Chromecast Discovery', sprintf(Debug::FOUNDDEVICE, $service[Properties::NAME]), 0);
 						
 							$devices[$id] = [	// Id is used as index
 								Properties::NAME => $service[Properties::NAME],

@@ -52,7 +52,7 @@
         const DISCOVERYFAILED = 'DiscoverCCDevices(): The discovery of Chromecast devices failed';
         const NODEVICESDISCOVERED = 'DiscoverCCDevices(): Did not find any Chromecast devices on the network';
         const INVALIDRESPONSE = 'DiscoverCCDevices(): Invalid query response from "%s. The response was: %s"';
-        const DEVICEFOUND = 'DiscoverCCDevices(): "%s" reponded to the query. Adding it to the list';
+        const FOUNDDEVICE = 'DiscoverCCDevices(): "%s" reponded to the query. Adding it to the list';
         const NORESPONSE = 'DiscoverCCDevices(): No Query response from "%s"';
         const QUERYDETAILS = 'DiscoverCCDevices(): Querying "%s" for more information';
         const FOUNDDEVICES = 'DiscoverCCDevices(): Found Chromecast devices';

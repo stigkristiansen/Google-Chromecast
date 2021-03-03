@@ -83,29 +83,46 @@
 	
 		private function DiscoverCCDevices() : array {
 			$this->LogMessage(Messages::DISCOVER, KL_MESSAGE);
+
+			$this->SendDebug('Chromecast Discovery', 'DiscoverCCDevices(): Starting discovery of Chromecast devices', 0);
 			
 			$devices = [];
 
 			$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT));
 
 			if($services!==false) {
-				foreach($services as $service) {
-					$device = @ZC_QueryServiceEx ($this->dnsSdId , $service[Properties::NAME], $service[Properties::TYPE] ,  $service[Properties::DOMAIN], $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT)); 
-					if($device===false || count($device)==0)
-						continue;
-					
-					$displayName = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'fn');
-					$id = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'id');
-					if($displayName!==false && $id!==false) {
+				$this->SendDebug('Chromecast Discovery', 'DiscoverCCDevices(): Found Chromecast devices', 0);
+				
+				if(count($services)>0) {
+					foreach($services as $service) {
+						$this->SendDebug('Chromecast Discovery', sprintf('DiscoverCCDevices(): Querying "%s" for more information', $service[Properties::NAME]), 0);
+						
+						$device = @ZC_QueryServiceEx ($this->dnsSdId , $service[Properties::NAME], $service[Properties::TYPE] ,  $service[Properties::DOMAIN], $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT)); 
+						if($device===false || count($device)==0) {
+							$this->SendDebug('Chromecast Discovery', sprintf('DiscoverCCDevices(): No Query response from "%s"', $service[Properties::NAME]), 0);
+							continue;
+						}
+						
+						$displayName = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'fn');
+						$id = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'id');
+						if($displayName!==false && $id!==false) {
+							$this->SendDebug('Chromecast Discovery', sprintf('DiscoverCCDevices(): "%s" reponded to the query. Adding it to the list', $service[Properties::NAME]), 0);
+						
 							$devices[$id] = [	// Id is used as index
 								Properties::NAME => $service[Properties::NAME],
 								Properties::DISPLAYNAME => $displayName
 							];	
-					} else
-						$this->LogMessage(Errors::INVALIDRESPONSE, KL_ERROR);
-				}
-			} else
+						} else {
+							$this->SendDebug('Chromecast Discovery', sprintf('DiscoverCCDevices(): Invalid query response from "%s. The response was: %s"', $service[Properties::NAME], json_encode($device[0])), 0);
+							$this->LogMessage(Errors::INVALIDRESPONSE, KL_ERROR);
+						}
+					}
+				} else
+					$this->SendDebug('Chromecast Discovery', 'DiscoverCCDevices(): Did not find any Chromecast devices on the network', 0);	
+			} else {
+				$this->SendDebug('Chromecast Discovery', 'DiscoverCCDevices(): The discovery of Chromecast devices failed', 0);
 				$this->LogMessage(Errors::INVALIDRESPONSE, KL_ERROR);
+			}
 
 			return $devices;
 		}
@@ -113,11 +130,15 @@
 		private function GetCCInstances () : array {
 			$devices = [];
 
+			$this->SendDebug('Chromecast Discovery', sprintf('GetCCInstances(): Getting list of all created Chromecast devices (module id: %s)', Modules::CHROMECAST), 0);
+
 			$instanceIds = IPS_GetInstanceListByModuleID(Modules::CHROMECAST);
         	
         	foreach ($instanceIds as $instanceId) {
 				$devices[$instanceId] = IPS_GetProperty($instanceId, 'Id');
 			}
+
+			$this->SendDebug('Chromecast Discovery', sprintf('GetCCInstances(): Found %i instances of Chromecast device', count($devices)), 0);
 
 			return $devices;
 		}

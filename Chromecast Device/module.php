@@ -60,7 +60,7 @@
 			try {
 				$this->SetTimer(0);	
 				
-				$this->>LogMessage('This is a attribute: '. $this->ReadAttributeString('Test'));
+				$this->LogMessage('This is a attribute: '. $this->ReadAttributeString('Test'));
 				
 				$type = '';
 				$domain = '';

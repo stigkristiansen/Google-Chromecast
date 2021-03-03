@@ -138,7 +138,7 @@
 				$devices[$instanceId] = IPS_GetProperty($instanceId, 'Id');
 			}
 
-			$this->SendDebug('Chromecast Discovery', sprintf('GetCCInstances(): Found %i instances of Chromecast device', count($devices)), 0);
+			$this->SendDebug('Chromecast Discovery', sprintf('GetCCInstances(): Found %d instances of Chromecast device(s)', count($devices)), 0);
 
 			return $devices;
 		}

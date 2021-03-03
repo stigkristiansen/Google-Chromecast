@@ -55,7 +55,7 @@
         const DEVICEFOUND = 'DiscoverCCDevices(): "%s" reponded to the query. Adding it to the list';
         const NORESPONSE = 'DiscoverCCDevices(): No Query response from "%s"';
         const QUERYDETAILS = 'DiscoverCCDevices(): Querying "%s" for more information';
-        const FOUNDDEVICES = 'Chromecast Discovery', 'DiscoverCCDevices(): Found Chromecast devices';
+        const FOUNDDEVICES = 'DiscoverCCDevices(): Found Chromecast devices';
         const STARTINGDISCOVERY = 'DiscoverCCDevices(): Starting discovery of Chromecast devices';
 
 

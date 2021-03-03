@@ -91,7 +91,7 @@
 			$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT));
 
 			if($services!==false) {
-				$this->SendDebug(Debug::FOUNDDEVICES, 0);
+				$this->SendDebug('Chromecast Discovery', Debug::FOUNDDEVICES, 0);
 				
 				if(count($services)>0) {
 					foreach($services as $service) {

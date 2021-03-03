@@ -19,7 +19,7 @@
 			//Never delete this line!
 			parent::Create();
 
-			$this->RegisterPropertyInteger(Properties::DISCOVERTIMEOUT, 500);
+			$this->RegisterPropertyInteger(Properties::DISCOVERYTIMEOUT, 500);
 		}
 
 		public function Destroy()
@@ -47,7 +47,7 @@
 					'instanceID' 			=> 0,
 				];
 				
-				// Check if discoverd device has an instance that is created earlier. If found, set InstanceID and DisplayName
+				// Check if discovered device has an instance that is created earlier. If found, set InstanceID and DisplayName
 				$instanceId = array_search($id, $ccInstances);
 				if ($instanceId !== false) {
 					unset($ccInstances[$instanceId]); // Remove from list to avoid duplicates
@@ -86,11 +86,11 @@
 			
 			$devices = [];
 
-			$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", $this->ReadPropertyInteger(Properties::DISCOVERTIMEOUT));
+			$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT));
 
 			if($services!==false) {
 				foreach($services as $service) {
-					$device = @ZC_QueryServiceEx ($this->dnsSdId , $service[Properties::NAME], $service[Properties::TYPE] ,  $service[Properties::DOMAIN], $this->ReadPropertyInteger(Properties::DISCOVERTIMEOUT)); 
+					$device = @ZC_QueryServiceEx ($this->dnsSdId , $service[Properties::NAME], $service[Properties::TYPE] ,  $service[Properties::DOMAIN], $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT)); 
 					if($device===false || count($device)==0)
 						continue;
 					

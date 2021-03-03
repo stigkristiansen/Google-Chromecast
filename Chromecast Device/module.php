@@ -18,7 +18,7 @@
 			//Never delete this line!
 			parent::Create();
 
-			$this->RegisterPropertyInteger(Properties::DISCOVERTIMEOUT, 500);
+			$this->RegisterPropertyInteger(Properties::DISCOVERYTIMEOUT, 500);
 
 			$this->RegisterPropertyString(Properties::NAME, '');
 			$this->RegisterPropertyString(Properties::ID, '');
@@ -63,9 +63,9 @@
 				$found = false;
 				$name = $this->ReadPropertyString(Properties::NAME);
 
-				$this->SendDebug('Chromecast', sprintf('Update: Searching for device with name "%s"', $name), 0);
+				$this->SendDebug('Chromecast', sprintf(Debug::SEARCHING, $name), 0);
 
-				$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", $this->ReadPropertyInteger(Properties::DISCOVERTIMEOUT));
+				$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT));
 				if($services!==false) {
 					foreach($services as $service) {
 						if(strcasecmp($service[Properties::NAME], $name)==0) {
@@ -78,33 +78,33 @@
 				}
 
 				if($found) {
-					$this->SendDebug('Chromecast', sprintf('Update: Found device "%s". Querying for more information', $name), 0);
+					$this->SendDebug('Chromecast', sprintf(Debug::DEVICEFOUND, $name), 0);
 
-					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type , $domain, $this->ReadPropertyInteger(Properties::DISCOVERTIMEOUT)); 
+					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type , $domain, $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT)); 
 
 					if($device!==false && count($device)>0) {
-						$this->SendDebug('Chromecast', sprintf('Update: The query returned information for "%s"', $name), 0);
+						$this->SendDebug('Chromecast', sprintf(Debug::QUERYOK, $name), 0);
 						
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');  // Defined in trait ServiceDiscovery
 						if($source!==false) {
-							$this->SendDebug('Chromecast', sprintf('Update: Updating statusvariable "Source" for "%s"', $name), 0);
+							$this->SendDebug('Chromecast', sprintf(UPDATESTATUS, $name), 0);
 
 							if(strpos($source, 'Casting: ')===0)  // Remove "Casting:" 
 								$source = substr($source, 9);
 
-							$this->SendDebug('Chromecast', sprintf('Update: New value for "Source" for "%s" is "%s"', $name, $source), 0);
+							$this->SendDebug('Chromecast', sprintf(Debug::NEWVALUE, $name, $source), 0);
 
 							$this->SetValueEx(Variables::SOURCE_IDENT, $source);
 						} else {
-							$this->SendDebug('Chromecast', sprintf('Update: Did not find streaming information for "%s"', $name), 0);
+							$this->SendDebug('Chromecast', sprintf(Debug::MISISNGSTREAMINGINFO, $name), 0);
 							$this->SetValueEx(Variables::SOURCE_IDENT, '');	
 						}
 					} else {
-						$this->SendDebug('Chromecast', sprintf('Update: The query did not return any information for "%s"', $name), 0);
+						$this->SendDebug('Chromecast', sprintf(Debug::QUERYNOINFO, $name), 0);
 						$this->SetValueEx(Variables::SOURCE_IDENT, '');
 					}
 				} else {
-					$this->SendDebug('Chromecast', sprintf('Update: The device "%s" was not found', $name), 0);
+					$this->SendDebug('Chromecast', sprintf(Debug::DEVICENOTFOUND, $name), 0);
 					$this->SetValueEx(Variables::SOURCE_IDENT, '');
 				}
 			} catch(Exception $e) {

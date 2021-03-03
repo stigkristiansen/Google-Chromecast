@@ -60,6 +60,7 @@
 					'name'			=> $device[Properties::DISPLAYNAME],
 					'configuration' => [
 						Properties::NAME => $device[Properties::NAME],
+						'Test' => 'Virker det?',
 						Properties::ID 	 => $id
 					]
 				];

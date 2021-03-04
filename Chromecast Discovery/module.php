@@ -40,13 +40,13 @@
 	
 			$values = [];
 
-			$this->SendDebug(IPS_GetName($this->InstanceID), 'GetConfigurationForm(): Building Configuration form', 0);
+			$this->SendDebug(IPS_GetName($this->InstanceID), Debug::BUILDINGFORM, 0);
 	
 			// Add devices that are discovered
 			if(count($ccDevices)>0)
-				$this->SendDebug(IPS_GetName($this->InstanceID), 'GetConfigurationForm(): Adding discovered devices', 0);
+				$this->SendDebug(IPS_GetName($this->InstanceID), Debug::ADDINGDISCOVEREDDEVICE, 0);
 			else
-				$this->SendDebug(IPS_GetName($this->InstanceID), 'GetConfigurationForm(): No discovered devices to add', 0);
+				$this->SendDebug(IPS_GetName($this->InstanceID), Debug::NODEVICEDISCOVERED, 0);
 
 			foreach ($ccDevices as $id => $device) {
 				$value = [
@@ -54,12 +54,12 @@
 					'instanceID' 			=> 0,
 				];
 
-				$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('GetConfigurationForm(): Added discovered device "%s"', $device[Properties::DISPLAYNAME]), 0);
+				$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::ADDEDDISCOVEREDDEVICE, $device[Properties::DISPLAYNAME]), 0);
 				
 				// Check if discovered device has an instance that is created earlier. If found, set InstanceID and DisplayName
 				$instanceId = array_search($id, $ccInstances);
 				if ($instanceId !== false) {
-					$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('GetConfigurationForm(): The discovered device "%s" exists as an instance. Setting InstanceId to %d', $device['DisplayName'], $instanceId), 0);
+					$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::ADDINSTANCETODEVICE, $device[Properties::DISPLAYNAME], $instanceId), 0);
 					unset($ccInstances[$instanceId]); // Remove from list to avoid duplicates
 					$value[Properties::DISPLAYNAME] = IPS_GetName($instanceId);
 					$value['instanceID'] = $instanceId;
@@ -79,7 +79,7 @@
 
 			// Add devices that are not discovered, but created earlier
 			if(count($ccInstances)>0)
-				$this->SendDebug(IPS_GetName($this->InstanceID), 'GetConfigurationForm(): Adding existing instances that are not discovered', 0);
+				$this->SendDebug(IPS_GetName($this->InstanceID), Debug::ADDINGEXISTINGINSTANCE, 0);
 			
 			foreach ($ccInstances as $instanceId => $id) {
 				$values[] = [
@@ -87,13 +87,13 @@
 					'instanceID' 			=> $instanceId
 				];
 
-				$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('GetConfigurationForm(): Added existing instance "%s" with InstanceId %d', IPS_GetName($instanceId), $instanceId), 0);
+				$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::ADDINGINSTANCE, IPS_GetName($instanceId), $instanceId), 0);
 			}
 
 			$form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
 			$form['actions'][0]['values'] = $values;
 
-			$this->SendDebug(IPS_GetName($this->InstanceID), 'GetConfigurationForm(): The Configuration form build is complete', 0);
+			$this->SendDebug(IPS_GetName($this->InstanceID), >Debug::FORMCOMPLETED, 0);
 	
 			return json_encode($form);
 		}

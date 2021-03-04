@@ -63,7 +63,7 @@
 				$found = false;
 				$name = $this->ReadPropertyString(Properties::NAME);
 
-				$this->SendDebug('Chromecast', sprintf(Debug::SEARCHING, $name), 0);
+				$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::SEARCHING, $name), 0);
 
 				$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT));
 				if($services!==false) {
@@ -78,33 +78,33 @@
 				}
 
 				if($found) {
-					$this->SendDebug('Chromecast', sprintf(Debug::DEVICEFOUND, $name), 0);
+					$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::DEVICEFOUND, $name), 0);
 
 					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type , $domain, $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT)); 
 
 					if($device!==false && count($device)>0) {
-						$this->SendDebug('Chromecast', sprintf(Debug::QUERYOK, $name), 0);
+						$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::QUERYOK, $name), 0);
 						
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');  // Defined in trait ServiceDiscovery
 						if($source!==false) {
-							$this->SendDebug('Chromecast', sprintf(Debug::UPDATESTATUS, $name), 0);
+							$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::UPDATESTATUS, $name), 0);
 
 							if(strpos($source, 'Casting: ')===0)  // Remove "Casting:" 
 								$source = substr($source, 9);
 
-							$this->SendDebug('Chromecast', sprintf(Debug::NEWVALUE, $name, $source), 0);
+							$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::NEWVALUE, $name, $source), 0);
 
 							$this->SetValueEx(Variables::SOURCE_IDENT, $source);
 						} else {
-							$this->SendDebug('Chromecast', sprintf(Debug::MISISNGSTREAMINGINFO, $name), 0);
+							$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::MISISNGSTREAMINGINFO, $name), 0);
 							$this->SetValueEx(Variables::SOURCE_IDENT, '');	
 						}
 					} else {
-						$this->SendDebug('Chromecast', sprintf(Debug::QUERYNOINFO, $name), 0);
+						$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::QUERYNOINFO, $name), 0);
 						$this->SetValueEx(Variables::SOURCE_IDENT, '');
 					}
 				} else {
-					$this->SendDebug('Chromecast', sprintf(Debug::DEVICENOTFOUND, $name), 0);
+					$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::DEVICENOTFOUND, $name), 0);
 					$this->SetValueEx(Variables::SOURCE_IDENT, '');
 				}
 			} catch(Exception $e) {

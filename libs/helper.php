@@ -47,7 +47,8 @@
         const MISISNGSTREAMINGINFO = 'Update(): Did not find streaming information for "%s"';
         const QUERYNOINFO = 'Update(): The query did not return any information for "%s"';
         const DEVICENOTFOUND = 'Update(): The device "%s" was not found';
-        const NUMBERFOUND = 'GetCCInstances(): Added %d instances(es) of Chromecast device(s) to the list';
+        const INSTANCESCOMPLETED = 'GetCCInstances(): Completed';
+        const NUMBERFOUND = 'GetCCInstances(): Added %d instance(s) of Chromecast device(s) to the list';
         const GETTINGINSTANCES = 'GetCCInstances(): Getting list of all created Chromecast devices (module id: %s)';
         const DISCOVERYFAILED = 'DiscoverCCDevices(): The discovery of Chromecast devices failed';
         const NODEVICESDISCOVERED = 'DiscoverCCDevices(): Did not find any Chromecast devices on the network';
@@ -57,6 +58,8 @@
         const QUERYDETAILS = 'DiscoverCCDevices(): Querying "%s" for more information';
         const FOUNDDEVICES = 'DiscoverCCDevices(): Found Chromecast devices';
         const STARTINGDISCOVERY = 'DiscoverCCDevices(): Starting discovery of Chromecast devices';
+        const DISCOVERYCOMPLETED = 'DiscoverCCDevices(): Discovery is completed';
+        
 
 
     }

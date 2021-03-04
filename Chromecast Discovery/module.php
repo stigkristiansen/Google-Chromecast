@@ -141,6 +141,8 @@
 				$this->LogMessage(Errors::INVALIDRESPONSE, KL_ERROR);
 			}
 
+			$this->SendDebug(IPS_GetName($this->InstanceID), Debug::DISCOVERYCOMPLETED, 0);	
+			
 			return $devices;
 		}
 
@@ -156,6 +158,7 @@
 			}
 
 			$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::NUMBERFOUND, count($devices)), 0);
+			$this->SendDebug(IPS_GetName($this->InstanceID), Debug::INSTANCESCOMPLETED, 0);	
 
 			return $devices;
 		}

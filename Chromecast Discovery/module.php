@@ -93,7 +93,7 @@
 			$form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
 			$form['actions'][0]['values'] = $values;
 
-			$this->SendDebug(IPS_GetName($this->InstanceID), >Debug::FORMCOMPLETED, 0);
+			$this->SendDebug(IPS_GetName($this->InstanceID), Debug::FORMCOMPLETED, 0);
 	
 			return json_encode($form);
 		}

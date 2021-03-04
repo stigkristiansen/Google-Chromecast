@@ -39,17 +39,27 @@
 			$ccInstances = $this->GetCCInstances();
 	
 			$values = [];
+
+			$this->SendDebug('Chromecast Discovery', 'GetConfigurationForm(): Building Configuration form', 0);
 	
 			// Add devices that are discovered
+			if(count($ccDevices)>0)
+				$this->SendDebug('Chromecast Discovery', 'GetConfigurationForm(): Adding discovered devices', 0);
+			else
+				$this->SendDebug('Chromecast Discovery', 'GetConfigurationForm(): No discovered devices to add', 0);
+
 			foreach ($ccDevices as $id => $device) {
+				$this->SendDebug('Chromecast Discovery', sprintf('GetConfigurationForm(): Adding discovered device "%s"', $device[Properties::DISPLAYNAME]), 0);
+				
 				$value = [
-					Properties::DISPLAYNAME	=> $device['DisplayName'],
+					Properties::DISPLAYNAME	=> $device[Properties::DISPLAYNAME],
 					'instanceID' 			=> 0,
 				];
 				
 				// Check if discovered device has an instance that is created earlier. If found, set InstanceID and DisplayName
 				$instanceId = array_search($id, $ccInstances);
 				if ($instanceId !== false) {
+					$this->SendDebug('Chromecast Discovery', sprintf('GetConfigurationForm(): The discovered device "%s" exists as an instance. Setting InstanceId to %d', $device['DisplayName'], $instanceId), 0);
 					unset($ccInstances[$instanceId]); // Remove from list to avoid duplicates
 					$value[Properties::DISPLAYNAME] = IPS_GetName($instanceId);
 					$value['instanceID'] = $instanceId;
@@ -68,7 +78,11 @@
 			}
 
 			// Add devices that are not discovered, but created earlier
+			$this->SendDebug('Chromecast Discovery', 'GetConfigurationForm(): Adding existing instances that are not disovered', 0);
+			
 			foreach ($ccInstances as $instanceId => $id) {
+				$this->SendDebug('Chromecast Discovery', sprintf('GetConfigurationForm(): Adding existing instance "%s(%d)"', IPS_GetName($instanceId), $instanceId), 0);
+
 				$values[] = [
 					Properties::DISPLAYNAME => IPS_GetName($instanceId), 
 					'instanceID' 			=> $instanceId
@@ -77,6 +91,8 @@
 
 			$form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
 			$form['actions'][0]['values'] = $values;
+
+			$this->SendDebug('Chromecast Discovery', 'GetConfigurationForm(): The Configuration form build is complete', 0);
 	
 			return json_encode($form);
 		}

@@ -87,6 +87,8 @@
 					if($device!==false && count($device)>0) {
 						$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::QUERYOK, $name), 0);
 						
+						$this->SendDebug(IPS_GetName($this->InstanceID), $device[0]['Ip'])
+						
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');  // Defined in trait ServiceDiscovery
 						if($source!==false) {
 							$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::UPDATESTATUS, $name), 0);
@@ -131,5 +133,19 @@
 			$message->setPayloadType(0);
 			$message->setPayloadUtf8('{"type":"CONNECT"}');
 			$this->SendDebug(IPS_GetName($this->InstanceID), $message->serializeToString(), 0);
+			$ip = '';
+			$port = '8009';
+			$errno = 0;
+			$errstr = '';
+			$contextOptions = ['ssl' => ['verify_peer' => false, 'verify_peer_name' => false, ]];
+			$context = stream_context_create($contextOptions);
+			if ($socket = stream_socket_client('ssl://' . $ip . ":" . $port, $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $context)) {
+			}
+			else {
+				throw new Exception("Failed to connect to remote Chromecast");
+			}
+
+			fwrite($socket, $message->serializeToString());
+			fflush($socket);
 		}
 	}

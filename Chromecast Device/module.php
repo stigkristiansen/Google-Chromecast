@@ -87,7 +87,7 @@
 					if($device!==false && count($device)>0) {
 						$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::QUERYOK, $name), 0);
 						
-						$this->SendDebug(IPS_GetName($this->InstanceID), $device[0]['Ip'])
+						$this->SendDebug(IPS_GetName($this->InstanceID), $device[0]['Ip']);
 						
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');  // Defined in trait ServiceDiscovery
 						if($source!==false) {

@@ -41,6 +41,8 @@
 
 			if (IPS_GetKernelRunlevel() == KR_READY)
 				$this->SetTimer();
+
+			$this->SendToCC();
 		}
 
 		public function MessageSink($TimeStamp, $SenderID, $Message, $Data) {
@@ -118,5 +120,16 @@
 			$oldValue = $this->GetValue($Ident);
 			if($oldValue!=$Value)
 				$this->SetValue($Ident, $Value);
+		}
+
+		private function SendToCC() {
+			$message = new Cast_channel\CastMessage;
+			$message->setProtocolVersion(0);
+			$message->setSourceId('sender-0');
+			$message->setDestinationId('receiver-0');
+			$message->setNamespace('urn:x-cast:com.google.cast.tp.connection');
+			$message->setPayloadType(0);
+			$message->setPayloadUtf8('{"type":"CONNECT"}');
+			$this->SendDebug(IPS_GetName($this->InstanceID), $message->serializeToString(), 0);
 		}
 	}

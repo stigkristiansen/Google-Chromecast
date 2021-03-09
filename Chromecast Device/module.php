@@ -87,7 +87,7 @@
 					if($device!==false && count($device)>0) {
 						$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::QUERYOK, $name), 0);
 						
-						$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('IP-address is: %s',json_encode($device[0])), 0);
+						//$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('Data returned is: %s',json_encode($device[0])), 0);
 						
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');  // Defined in trait ServiceDiscovery
 						if($source!==false) {
@@ -133,7 +133,7 @@
 			$message->setPayloadType(0);
 			$message->setPayloadUtf8('{"type":"CONNECT"}');
 			$this->SendDebug(IPS_GetName($this->InstanceID), $message->serializeToString(), 0);
-			$ip = '';
+			$ip = '192.168.50.94';
 			$port = '8009';
 			$errno = 0;
 			$errstr = '';

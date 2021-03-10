@@ -124,6 +124,8 @@
 				$this->SetValue($Ident, $Value);
 		}
 
+		private $socket;
+
 		private function SendToCC() {
 			$message = new Cast_channel\CastMessage;
 			$message->setProtocolVersion(0);
@@ -139,14 +141,14 @@
 			$errstr = '';
 			$contextOptions = ['ssl' => ['verify_peer' => false, 'verify_peer_name' => false, ]];
 			$context = stream_context_create($contextOptions);
-			if ($socket = stream_socket_client('ssl://' . $ip . ":" . $port, $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $context)) {
+			if ($this->socket = stream_socket_client('ssl://' . $ip . ":" . $port, $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $context)) {
 			}
 			else {
 				throw new Exception("Failed to connect to remote Chromecast");
 			}
 
-			fwrite($socket, $message->serializeToString());
-			fflush($socket);
+			fwrite($this->socket, $message->serializeToString());
+			fflush($this->socket);
 			
 			$statusMessage = new Cast_channel\CastMessage;
 			$statusMessage->setProtocolVersion(0);
@@ -155,8 +157,8 @@
 			$statusMessage->setNamespace('urn:x-cast:com.google.cast.receiver');
 			$statusMessage->setPayloadType(0);
 			$message->setPayloadUtf8('{"type":"GET_STATUS","requestId":1}');
-			fwrite($socket, $statusMessage->serializeToString());
-			fflush($socket);
+			fwrite($this->socket, $statusMessage->serializeToString());
+			fflush($this->socket);
 
 			$r ='';
 			while ($this->transportid == '') {

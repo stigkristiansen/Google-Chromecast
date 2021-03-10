@@ -87,7 +87,7 @@
 					if($device!==false && count($device)>0) {
 						$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::QUERYOK, $name), 0);
 						
-						//$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('Data returned is: %s',json_encode($device[0])), 0);
+						$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('Data returned is: %s',json_encode($device[0])), 0);
 						
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');  // Defined in trait ServiceDiscovery
 						if($source!==false) {
@@ -147,5 +147,22 @@
 
 			fwrite($socket, $message->serializeToString());
 			fflush($socket);
+
+			
+			$statusMessage = new Cast_channel\CastMessage;
+			$statusMessage->setProtocolVersion(0);
+			$statusMessage->setSourceId('sender-0');
+			$statusMessage->setDestinationId('receiver-0');
+			$statusMessage->setNamespace('urn:x-cast:com.google.cast.receiver');
+			$statusMessage->setPayloadType(0);
+			$message->setPayloadUtf8('{"type":"GET_STATUS","requestId":1}');
+			fwrite($socket, $statusMessage->serializeToString());
+			fflush($socket);
+
+			$response = fread($socket, 2000);
+
+			$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('Chormecast status returend: %s', $response), 0);
+
+			
 		}
 	}

@@ -169,8 +169,8 @@
 			
 		}
 
-		$transportid='';
-		$sessionid='';
+		private $transportid='';
+		private $sessionid='';
 
 		private function getCastMessage(){
 		// Get the Chromecast Message/Response

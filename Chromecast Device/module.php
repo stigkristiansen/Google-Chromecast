@@ -147,7 +147,6 @@
 
 			fwrite($socket, $message->serializeToString());
 			fflush($socket);
-
 			
 			$statusMessage = new Cast_channel\CastMessage;
 			$statusMessage->setProtocolVersion(0);
@@ -159,10 +158,43 @@
 			fwrite($socket, $statusMessage->serializeToString());
 			fflush($socket);
 
-			$response = fread($socket, 2000);
+			$r ='';
+			while ($this->transportid == '') {
+				$r = $this->getCastMessage();
+			}
+			return $r;
 
-			$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('Chormecast status returend: %s', $response), 0);
+			$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('Chromecast status returned: %s', $r), 0);
 
 			
 		}
+
+		$transportid='';
+		$sessionid='';
+
+		private function getCastMessage(){
+		// Get the Chromecast Message/Response
+		// Later on we could update CCprotoBuf to decode this
+		// but for now all we need is the transport id  and session id if it is
+		// in the packet and we can read that directly.
+		//$this->testLive();
+		$response = fread($this->socket, 2000);
+		while (preg_match("/urn:x-cast:com.google.cast.tp.heartbeat/", $response) && preg_match("/\"PING\"/", $response)) {
+			//$this->pong();
+			sleep(3);
+			$response = fread($this->socket, 2000);
+			// Wait infinitely for a packet.
+			set_time_limit(30);
+		}
+		if (preg_match("/transportId/s", $response)) {
+			preg_match("/transportId\"\:\"([^\"]*)/", $response, $matches);
+			$matches = $matches[1];
+			$this->transportid = $matches;
+		}
+		if (preg_match("/sessionId/s", $response)) {
+			preg_match("/\"sessionId\"\:\"([^\"]*)/", $response, $r);
+			$this->sessionid = $r[1];
+		}
+		return $response;
+	}
 	}

@@ -62,6 +62,17 @@
             return json_encode($form);
 		}
 
+		public function RequestAction($Ident, $Value) {
+			$this->SendDebug( __FUNCTION__ , sprintf('ReqestAction called for Ident "%s" with Value %s', $Ident, (string)$Value), 0);
+
+			switch (strtolower($Ident)) {
+				case 'discover':
+					$this->SendDebug(__FUNCTION__, 'Calling LoadDevices()...', 0);
+					$this->LoadDevices();
+					break;
+			}
+		}
+
 		private function LoadDevices() {
 			$this->SendDebug(__FUNCTION__, 'Updating Discovery form...', 0);
 

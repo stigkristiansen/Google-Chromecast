@@ -137,6 +137,8 @@
 
 			$newDevices = json_encode($values);
 			$this->SetBuffer('Devices', $newDevices);
+
+			$this->SendDebug(__FUNCTION__, sprintf('Values is "%s', $newDevices), 0);
 			            
 			$this->UpdateFormField('Discovery', 'values', $newDevices);
             $this->UpdateFormField('SearchingInfo', 'visible', false);

@@ -39,14 +39,14 @@
     }
 
     class Debug {
-        const SEARCHING = 'Update(): Searching for device with name "%s"';
-        const DEVICEFOUND = 'Update(): Found device "%s". Querying for more information';
-        const QUERYOK = 'Update(): The query returned information for "%s"';
-        const UPDATESTATUS = 'Update(): Updating statusvariable "Source" for "%s"';
-        const NEWVALUE = 'Update(): New value for "Source" for "%s" is "%s"';
-        const MISISNGSTREAMINGINFO = 'Update(): Did not find streaming information for "%s"';
-        const QUERYNOINFO = 'Update(): The query did not return any information for "%s"';
-        const DEVICENOTFOUND = 'Update(): The device "%s" was not found';
+        const SEARCHING = 'Searching for device with name "%s"';
+        const DEVICEFOUND = 'Found device "%s". Querying for more information';
+        const QUERYOK = 'The query returned information for "%s"';
+        const UPDATESTATUS = 'Updating statusvariable "Source" for "%s"';
+        const NEWVALUE = 'New value for "Source" for "%s" is "%s"';
+        const MISISNGSTREAMINGINFO = 'Did not find streaming information for "%s"';
+        const QUERYNOINFO = 'The query did not return any information for "%s"';
+        const DEVICENOTFOUND = 'The device "%s" was not found';
         const INSTANCESCOMPLETED = 'Building list of instances completed';
         const NUMBERFOUND = 'Added %d instance(s) of Chromecast device(s) to the list';
         const GETTINGINSTANCES = 'Getting list of all created Chromecast devices (module id: %s)';

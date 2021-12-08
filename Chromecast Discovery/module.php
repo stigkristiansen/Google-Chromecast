@@ -145,7 +145,7 @@
 		}
 	
 		private function DiscoverCCDevices() : array {
-			$this->LogMessage(Messages::DISCOVER, KL_MESSAGE);
+			$this->LogMessage(Messages::DISCOVER, KL_NOTIFY);
 
 			$this->SendDebug(__FUNCTION__, Debug::STARTINGDISCOVERY, 0);
 			

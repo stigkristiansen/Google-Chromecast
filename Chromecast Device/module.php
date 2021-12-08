@@ -65,7 +65,7 @@
 				$found = false;
 				$name = $this->ReadPropertyString(Properties::NAME);
 
-				$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::SEARCHING, $name), 0);
+				$this->SendDebug(__FUNCTION__, sprintf(Debug::SEARCHING, $name), 0);
 
 				$services = @ZC_QueryServiceTypeEx($this->dnsSdId, "_googlecast._tcp", "", $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT));
 				if($services!==false) {
@@ -80,35 +80,35 @@
 				}
 
 				if($found) {
-					$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::DEVICEFOUND, $name), 0);
+					$this->SendDebug(__FUNCTION__, sprintf(Debug::DEVICEFOUND, $name), 0);
 
 					$device = @ZC_QueryServiceEx($this->dnsSdId , $name, $type , $domain, $this->ReadPropertyInteger(Properties::DISCOVERYTIMEOUT)); 
 
 					if($device!==false && count($device)>0) {
-						$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::QUERYOK, $name), 0);
+						$this->SendDebug(__FUNCTION__, sprintf(Debug::QUERYOK, $name), 0);
 						
-						$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('Data returned is: %s',json_encode($device[0])), 0);
+						$this->SendDebug(__FUNCTION__, sprintf('Data returned is: %s',json_encode($device[0])), 0);
 						
 						$source = $this->GetServiceTXTRecord($device[0]['TXTRecords'], 'rs');  // Defined in trait ServiceDiscovery
 						if($source!==false) {
-							$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::UPDATESTATUS, $name), 0);
+							$this->SendDebug(__FUNCTION__, sprintf(Debug::UPDATESTATUS, $name), 0);
 
 							if(strpos($source, 'Casting: ')===0)  // Remove "Casting:" 
 								$source = substr($source, 9);
 
-							$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::NEWVALUE, $name, $source), 0);
+							$this->SendDebug(__FUNCTION__, sprintf(Debug::NEWVALUE, $name, $source), 0);
 
 							$this->SetValueEx(Variables::SOURCE_IDENT, $source);
 						} else {
-							$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::MISISNGSTREAMINGINFO, $name), 0);
+							$this->SendDebug(__FUNCTION__, sprintf(Debug::MISISNGSTREAMINGINFO, $name), 0);
 							$this->SetValueEx(Variables::SOURCE_IDENT, '');	
 						}
 					} else {
-						$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::QUERYNOINFO, $name), 0);
+						$this->SendDebug(__FUNCTION__, sprintf(Debug::QUERYNOINFO, $name), 0);
 						$this->SetValueEx(Variables::SOURCE_IDENT, '');
 					}
 				} else {
-					$this->SendDebug(IPS_GetName($this->InstanceID), sprintf(Debug::DEVICENOTFOUND, $name), 0);
+					$this->SendDebug(__FUNCTION__, sprintf(Debug::DEVICENOTFOUND, $name), 0);
 					$this->SetValueEx(Variables::SOURCE_IDENT, '');
 				}
 			} catch(Exception $e) {
@@ -134,7 +134,7 @@
 			$message->setNamespace('urn:x-cast:com.google.cast.tp.connection');
 			$message->setPayloadType(0);
 			$message->setPayloadUtf8('{"type":"CONNECT"}');
-			$this->SendDebug(IPS_GetName($this->InstanceID), $message->serializeToString(), 0);
+			$this->SendDebug(__FUNCTION__, $message->serializeToString(), 0);
 			$ip = '192.168.50.94';
 			$port = '8009';
 			$errno = 0;
@@ -166,7 +166,7 @@
 			}
 			return $r;
 
-			$this->SendDebug(IPS_GetName($this->InstanceID), sprintf('Chromecast status returned: %s', $r), 0);
+			$this->SendDebug(__FUNCTION__, sprintf('Chromecast status returned: %s', $r), 0);
 
 			
 		}

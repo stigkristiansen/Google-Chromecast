@@ -47,26 +47,26 @@
         const MISISNGSTREAMINGINFO = 'Update(): Did not find streaming information for "%s"';
         const QUERYNOINFO = 'Update(): The query did not return any information for "%s"';
         const DEVICENOTFOUND = 'Update(): The device "%s" was not found';
-        const INSTANCESCOMPLETED = 'GetCCInstances(): Building list of instances completed';
-        const NUMBERFOUND = 'GetCCInstances(): Added %d instance(s) of Chromecast device(s) to the list';
-        const GETTINGINSTANCES = 'GetCCInstances(): Getting list of all created Chromecast devices (module id: %s)';
-        const DISCOVERYFAILED = 'DiscoverCCDevices(): The discovery of Chromecast devices failed';
-        const NODEVICESDISCOVERED = 'DiscoverCCDevices(): Did not find any Chromecast devices on the network';
-        const INVALIDRESPONSE = 'DiscoverCCDevices(): Invalid query response from "%s. The response was: %s"';
-        const FOUNDDEVICE = 'DiscoverCCDevices(): "%s" reponded to the query. Adding it to the list';
-        const NORESPONSE = 'DiscoverCCDevices(): No Query response from "%s"';
-        const QUERYDETAILS = 'DiscoverCCDevices(): Querying "%s" for more information';
-        const FOUNDDEVICES = 'DiscoverCCDevices(): Found Chromecast devices';
-        const STARTINGDISCOVERY = 'DiscoverCCDevices(): Starting discovery of Chromecast devices';
-        const DISCOVERYCOMPLETED = 'DiscoverCCDevices(): Discovery is completed';
-        const FORMCOMPLETED = 'GetConfigurationForm(): The Configuration form build is complete';
-        const ADDINGINSTANCE = 'GetConfigurationForm(): Added existing instance "%s" with InstanceId %d';
-        const ADDINGEXISTINGINSTANCE = 'GetConfigurationForm(): Adding existing instances that are not discovered';
-        const ADDINSTANCETODEVICE = 'GetConfigurationForm(): The discovered device "%s" exists as an instance. Setting InstanceId to %d';
-        const ADDEDDISCOVEREDDEVICE = 'GetConfigurationForm(): Added discovered device "%s"';
-        const NODEVICEDISCOVERED = 'GetConfigurationForm(): No discovered devices to add';
-        const ADDINGDISCOVEREDDEVICE = 'GetConfigurationForm(): Adding discovered devices';
-        const BUILDINGFORM = 'GetConfigurationForm(): Building Configuration form';
+        const INSTANCESCOMPLETED = 'Building list of instances completed';
+        const NUMBERFOUND = 'Added %d instance(s) of Chromecast device(s) to the list';
+        const GETTINGINSTANCES = 'Getting list of all created Chromecast devices (module id: %s)';
+        const DISCOVERYFAILED = 'The discovery of Chromecast devices failed';
+        const NODEVICESDISCOVERED = 'Did not find any Chromecast devices on the network';
+        const INVALIDRESPONSE = 'Invalid query response from "%s. The response was: %s"';
+        const FOUNDDEVICE = '"%s" reponded to the query. Adding it to the list';
+        const NORESPONSE = 'No Query response from "%s"';
+        const QUERYDETAILS = 'Querying "%s" for more information';
+        const FOUNDDEVICES = 'Found Chromecast devices';
+        const STARTINGDISCOVERY = 'Starting discovery of Chromecast devices';
+        const DISCOVERYCOMPLETED = 'Discovery is completed';
+        const FORMCOMPLETED = 'The Configuration form build is complete';
+        const ADDINGINSTANCE = 'Added existing instance "%s" with InstanceId %d';
+        const ADDINGEXISTINGINSTANCE = 'Adding existing instances that are not discovered';
+        const ADDINSTANCETODEVICE = 'The discovered device "%s" exists as an instance. Setting InstanceId to %d';
+        const ADDEDDISCOVEREDDEVICE = 'Added discovered device "%s"';
+        const NODEVICEDISCOVERED = 'No discovered devices to add';
+        const ADDINGDISCOVEREDDEVICE = 'Adding discovered devices';
+        const BUILDINGFORM = 'Building Configuration form';
 
 
     }

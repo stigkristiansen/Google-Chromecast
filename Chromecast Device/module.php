@@ -41,8 +41,6 @@
 
 			if (IPS_GetKernelRunlevel() == KR_READY)
 				$this->SetTimer();
-
-			$this->SendToCC();
 		}
 
 		public function MessageSink($TimeStamp, $SenderID, $Message, $Data) {
@@ -126,50 +124,7 @@
 
 		private $socket;
 
-		private function SendToCC() {
-			$message = new Cast_channel\CastMessage;
-			$message->setProtocolVersion(0);
-			$message->setSourceId('sender-0');
-			$message->setDestinationId('receiver-0');
-			$message->setNamespace('urn:x-cast:com.google.cast.tp.connection');
-			$message->setPayloadType(0);
-			$message->setPayloadUtf8('{"type":"CONNECT"}');
-			$this->SendDebug(__FUNCTION__, $message->serializeToString(), 0);
-			$ip = '192.168.50.94';
-			$port = '8009';
-			$errno = 0;
-			$errstr = '';
-			$contextOptions = ['ssl' => ['verify_peer' => false, 'verify_peer_name' => false, ]];
-			$context = stream_context_create($contextOptions);
-			if ($this->socket = stream_socket_client('ssl://' . $ip . ":" . $port, $errno, $errstr, 30, STREAM_CLIENT_CONNECT, $context)) {
-			}
-			else {
-				throw new Exception("Failed to connect to remote Chromecast");
-			}
-
-			fwrite($this->socket, $message->serializeToString());
-			fflush($this->socket);
-			
-			$statusMessage = new Cast_channel\CastMessage;
-			$statusMessage->setProtocolVersion(0);
-			$statusMessage->setSourceId('sender-0');
-			$statusMessage->setDestinationId('receiver-0');
-			$statusMessage->setNamespace('urn:x-cast:com.google.cast.receiver');
-			$statusMessage->setPayloadType(0);
-			$message->setPayloadUtf8('{"type":"GET_STATUS","requestId":1}');
-			fwrite($this->socket, $statusMessage->serializeToString());
-			fflush($this->socket);
-
-			$r ='';
-			while ($this->transportid == '') {
-				$r = $this->getCastMessage();
-			}
-			return $r;
-
-			$this->SendDebug(__FUNCTION__, sprintf('Chromecast status returned: %s', $r), 0);
-
-			
-		}
+		
 
 		private $transportid='';
 		private $sessionid='';

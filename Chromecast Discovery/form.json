@@ -11,7 +11,7 @@
         {
             "name": "SearchingInfo",
 			"type": "ProgressBar",
-			"caption": "The configurator is currently searching for devices. Please wait...",
+			"caption": "The Discovery Instance is currently searching for devices. Please wait...",
 			"indeterminate": true,
 			"visible": false
         },

@@ -38,7 +38,7 @@
 		}
 
 		public function GetConfigurationForm() {
-			$this->SendDebug(__FUNCTION__, 'Generating the form...', 0);
+			$this->SendDebug(__FUNCTION__, 'Generating the Discovery Form...', 0);
             $this->SendDebug(__FUNCTION__, sprintf('SearchInProgress is "%s"', json_decode($this->GetBuffer('SearchInProgress'))?'TRUE':'FALSE'), 0);
             			
 			$devices = json_decode($this->GetBuffer('Devices'));
@@ -57,7 +57,7 @@
 			$this->SendDebug(__FUNCTION__, 'Adding cached devices to the form', 0);
 			$form['actions'][1]['values'] = $devices;
 
-			$this->SendDebug(__FUNCTION__, 'Finished generating the form', 0);
+			$this->SendDebug(__FUNCTION__, 'Finished generating the Discovery Form', 0);
 
             return json_encode($form);
 		}
@@ -74,7 +74,7 @@
 		}
 
 		private function LoadDevices() {
-			$this->SendDebug(__FUNCTION__, 'Updating Discovery form...', 0);
+			$this->SendDebug(__FUNCTION__, 'Updating the Discovery form...', 0);
 
 			$ccDevices = $this->DiscoverCCDevices();
 			$ccInstances = $this->GetCCInstances();
@@ -141,7 +141,7 @@
 			$this->UpdateFormField('Discovery', 'values', $newDevices);
             $this->UpdateFormField('SearchingInfo', 'visible', false);
 
-			$this->SendDebug(__FUNCTION__, 'Updating Discovery form completed', 0);
+			$this->SendDebug(__FUNCTION__, 'Updating Discovery Form completed', 0);
 		}
 	
 		private function DiscoverCCDevices() : array {

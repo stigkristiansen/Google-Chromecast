@@ -1,10 +1,20 @@
 {
     "elements": [
         {
+            "type" :  "Label" ,  "caption" :  "DISCOVERY"
+        },
+        {
             "type": "NumberSpinner", "name": "DiscoveryTimeout", "caption": "Discovery Timeout", "suffix": "milliseconds"
         }
     ],
     "actions": [
+        {
+            "name": "SearchingInfo",
+			"type": "ProgressBar",
+			"caption": "The configurator is currently searching for devices. Please wait...",
+			"indeterminate": true,
+			"visible": false
+        },
         {
             "type": "Configurator",
             "name": "Discovery",

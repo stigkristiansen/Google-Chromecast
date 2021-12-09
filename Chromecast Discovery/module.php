@@ -38,7 +38,7 @@
 		}
 
 		public function GetConfigurationForm() {
-			$this->SendDebug(__FUNCTION__, , 0);
+			$this->SendDebug(__FUNCTION__, Debug::BUILDINGFORM, 0);
             $this->SendDebug(__FUNCTION__, sprintf(Debug::SEARCHIS, json_decode($this->GetBuffer(Buffer::SEARCHINPROGRESS))?'TRUE':'FALSE'), 0);
             			
 			$devices = json_decode($this->GetBuffer(Buffer::DEVICES));

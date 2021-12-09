@@ -78,6 +78,7 @@
         const SEARCHIS = 'SearchInProgress is "%s"';
         const DISCOVERYFORMCOMPLETED = 'Updating Discovery Form completed';
         const CALLLOADDEVICES = 'Calling LoadDevices()...';
+        const CALLUPDATE = 'Calling Update()...';
         const REQUESTACTION = 'ReqestAction called for Ident "%s" with Value %s';
         const GENERATINGFORMDONE = 'Finished generating the Discovery Form';
         const ADDCACHEDDEVICES = 'Adding cached devices to the form';

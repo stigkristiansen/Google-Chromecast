@@ -83,6 +83,7 @@
         const GENERATINGFORMDONE = 'Finished generating the Discovery Form';
         const ADDCACHEDDEVICES = 'Adding cached devices to the form';
         const STARTTIMER = 'Starting a timer to process the search in a new thread...';
+        const UPDATETIMER = 'Setting Update timer to %d';
 
 
     }

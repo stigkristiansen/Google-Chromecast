@@ -34,7 +34,7 @@
 		public function ApplyChanges()
 		{
 			//Never delete this line!
-			parent::ApplyChanges();
+			parent::ApplyChanges(); 
 		}
 
 		public function GetConfigurationForm() {

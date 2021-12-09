@@ -63,6 +63,7 @@ class ChromecastDevice extends IPSModule {
 	}
 
 	private function SetTimer($Interval = Timers::INTERVAL) {
+		$this->SendDebug( __FUNCTION__ , sprintf('Setting timer to %d' $Interval), 0);
 		$this->SetTimerInterval(Timers::UPDATE . (string) $this->InstanceID, $Interval);
 	}
 

@@ -3,6 +3,7 @@
     class Timers {
         const UPDATE = 'CCDEUpdate';
         const INTERVAL = 5000;
+        const LOADDEVICE = 'LoadDevicesTimer';
     }
 
     class Variables {
@@ -38,6 +39,11 @@
         const DNSSD = '{780B2D48-916C-4D59-AD35-5A429B2355A5}';
     }
 
+    class Buffer {
+        const SEARCHINPROGRESS = 'SearchInProgress';
+        const DEVICES = 'Devices';
+    }
+
     class Debug {
         const SEARCHING = 'Searching for device with name "%s"';
         const DEVICEFOUND = 'Found device "%s". Querying for more information';
@@ -56,17 +62,26 @@
         const FOUNDDEVICE = '"%s" reponded to the query. Adding it to the list';
         const NORESPONSE = 'No Query response from "%s"';
         const QUERYDETAILS = 'Querying "%s" for more information';
-        const FOUNDDEVICES = 'Found Chromecast devices';
+        const FOUNDDEVICES = 'Found Chromecast device(s)';
         const STARTINGDISCOVERY = 'Starting discovery of Chromecast devices';
-        const DISCOVERYCOMPLETED = 'Discovery is completed';
+        const DISCOVERYCOMPLETED = 'The discovery is completed';
         const FORMCOMPLETED = 'The Configuration form build is complete';
         const ADDINGINSTANCE = 'Added existing instance "%s" with InstanceId %d';
         const ADDINGEXISTINGINSTANCE = 'Adding existing instances that are not discovered';
         const ADDINSTANCETODEVICE = 'The discovered device "%s" exists as an instance. Setting InstanceId to %d';
         const ADDEDDISCOVEREDDEVICE = 'Added discovered device "%s"';
         const NODEVICEDISCOVERED = 'No discovered devices to add';
-        const ADDINGDISCOVEREDDEVICE = 'Adding discovered devices';
-        const BUILDINGFORM = 'Building Configuration form';
+        const ADDINGDISCOVEREDDEVICE = 'Adding discovered device(s)';
+        const BUILDINGFORM = 'Building Discovery form';
+        const SEARCHFALSE = 'Setting SearchInProgress to FALSE';
+        const SEARCHTRUE = 'Setting SearchInProgress to TRUE';
+        const SEARCHIS = 'SearchInProgress is "%s"';
+        const DISCOVERYFORMCOMPLETED = 'Updating Discovery Form completed';
+        const CALLLOADDEVICES = 'Calling LoadDevices()...';
+        const REQUESTACTION = 'ReqestAction called for Ident "%s" with Value %s';
+        const GENERATINGFORMDONE = 'Finished generating the Discovery Form';
+        const ADDCACHEDDEVICES = 'Adding cached devices to the form';
+        const STARTTIMER = 'Starting a timer to process the search in a new thread...';
 
 
     }

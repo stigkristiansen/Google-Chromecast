@@ -21,8 +21,8 @@
 
 			$this->RegisterPropertyInteger(Properties::DISCOVERYTIMEOUT, 500);
 
-			$this->SetBuffer('Devices', json_encode([]));
-            $this->SetBuffer('SearchInProgress', json_encode(false));
+			$this->SetBuffer(Buffer::DEVICES, json_encode([]));
+            $this->SetBuffer(Buffer::SEARCHINPROGRESS, json_encode(false));
 		}
 
 		public function Destroy()
@@ -38,54 +38,52 @@
 		}
 
 		public function GetConfigurationForm() {
-			$this->SendDebug(__FUNCTION__, 'Generating the Discovery Form...', 0);
-            $this->SendDebug(__FUNCTION__, sprintf('SearchInProgress is "%s"', json_decode($this->GetBuffer('SearchInProgress'))?'TRUE':'FALSE'), 0);
+			$this->SendDebug(__FUNCTION__, , 0);
+            $this->SendDebug(__FUNCTION__, sprintf(Debug::SEARCHIS, json_decode($this->GetBuffer(Buffer::SEARCHINPROGRESS))?'TRUE':'FALSE'), 0);
             			
-			$devices = json_decode($this->GetBuffer('Devices'));
+			$devices = json_decode($this->GetBuffer(Buffer::DEVICES));
            
-			if (!json_decode($this->GetBuffer('SearchInProgress'))) {
-                $this->SendDebug(__FUNCTION__, 'Setting SearchInProgress to TRUE', 0);
-				$this->SetBuffer('SearchInProgress', json_encode(true));
+			if (!json_decode($this->GetBuffer(Buffer::SEARCHINPROGRESS))) {
+                $this->SendDebug(__FUNCTION__, Debug::SEARCHTRUE, 0);
+				$this->SetBuffer(Buffer::SEARCHINPROGRESS, json_encode(true));
 				
-				$this->SendDebug(__FUNCTION__, 'Starting a timer to process the search in a new thread...', 0);
-				$this->RegisterOnceTimer('LoadDevicesTimer', 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Discover", 0);');
+				$this->SendDebug(__FUNCTION__, Debug::STARTTIMER, 0);
+				$this->RegisterOnceTimer(Timers::LOADDEVICE, 'IPS_RequestAction(' . (string)$this->InstanceID . ', "Discover", 0);');
             }
 
 			$form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
 			$form['actions'][0]['visible'] = count($devices)==0;
 			
-			$this->SendDebug(__FUNCTION__, 'Adding cached devices to the form', 0);
+			$this->SendDebug(__FUNCTION__, Debug::ADDCACHEDDEVICES, 0);
 			$form['actions'][1]['values'] = $devices;
 
-			$this->SendDebug(__FUNCTION__, 'Finished generating the Discovery Form', 0);
+			$this->SendDebug(__FUNCTION__, Debug::GENERATINGFORMDONE, 0);
 
             return json_encode($form);
 		}
 
 		public function RequestAction($Ident, $Value) {
-			$this->SendDebug( __FUNCTION__ , sprintf('ReqestAction called for Ident "%s" with Value %s', $Ident, (string)$Value), 0);
+			$this->SendDebug( __FUNCTION__ , sprintf(Debug::REQUESTACTION, $Ident, (string)$Value), 0);
 
 			switch (strtolower($Ident)) {
 				case 'discover':
-					$this->SendDebug(__FUNCTION__, 'Calling LoadDevices()...', 0);
+					$this->SendDebug(__FUNCTION__, Debug::CALLLOADDEVICES, 0);
 					$this->LoadDevices();
 					break;
 			}
 		}
 
 		private function LoadDevices() {
-			$this->SendDebug(__FUNCTION__, 'Updating the Discovery form...', 0);
+			$this->SendDebug(__FUNCTION__, Debug::BUILDINGFORM, 0);
 
 			$ccDevices = $this->DiscoverCCDevices();
 			$ccInstances = $this->GetCCInstances();
 
-			$this->SendDebug(__FUNCTION__, 'Setting SearchInProgress to FALSE', 0);
-			$this->SetBuffer('SearchInProgress', json_encode(false));
+			$this->SendDebug(__FUNCTION__, Debug::SEARCHFALSE, 0);
+			$this->SetBuffer(Buffer::SEARCHINPROGRESS, json_encode(false));
 	
 			$values = [];
 
-			$this->SendDebug(__FUNCTION__, Debug::BUILDINGFORM, 0);
-	
 			// Add devices that are discovered
 			if(count($ccDevices)>0)
 				$this->SendDebug(__FUNCTION__, Debug::ADDINGDISCOVEREDDEVICE, 0);
@@ -136,14 +134,12 @@
 			}
 
 			$newDevices = json_encode($values);
-			$this->SetBuffer('Devices', $newDevices);
+			$this->SetBuffer(Buffer::DEVICES, $newDevices);
 
-			$this->SendDebug(__FUNCTION__, sprintf('Values is "%s', $newDevices), 0);
-			            
 			$this->UpdateFormField('Discovery', 'values', $newDevices);
             $this->UpdateFormField('SearchingInfo', 'visible', false);
 
-			$this->SendDebug(__FUNCTION__, 'Updating Discovery Form completed', 0);
+			$this->SendDebug(__FUNCTION__, Debug::DISCOVERYFORMCOMPLETED, 0);
 		}
 	
 		private function DiscoverCCDevices() : array {

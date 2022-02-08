@@ -1,7 +1,7 @@
 <?php
 
     class Timers {
-        const UPDATE = 'CCDEUpdate';
+        const UPDATE = 'Update';
         const INTERVAL = 5000;
         const LOADDEVICE = 'LoadDevicesTimer';
     }
